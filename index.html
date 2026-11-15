@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberGuard OS // Simulador de Defesa Cibernética</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-green: #00ff88;
+            --neon-cyan: #00e5ff;
+            --neon-red: #ff2a55;
+            --neon-yellow: #ffcc00;
+            --bg-dark: #070b12;
+            --panel-bg: rgba(13, 21, 34, 0.9);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #e2e8f0;
+            font-family: 'Fira Code', monospace;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 255, 136, 0.05) 0%, transparent 45%),
+                radial-gradient(circle at 85% 30%, rgba(0, 229, 255, 0.06) 0%, transparent 45%),
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+        }
+
+        .font-display {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* Efeito CRT Scanlines sutil */
+        .crt-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.25) 50%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.4;
+        }
+
+        /* Bordas e brilhos Cyberpunk */
+        .cyber-panel {
+            background: var(--panel-bg);
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 229, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .cyber-btn {
+            position: relative;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cyber-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+        }
+
+        .cyber-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .glow-green { text-shadow: 0 0 10px rgba(0, 255, 136, 0.6); }
+        .glow-cyan { text-shadow: 0 0 10px rgba(0, 229, 255, 0.6); }
+        .glow-red { text-shadow: 0 0 10px rgba(255, 42, 85, 0.6); }
+
+        @keyframes pulseBorder {
+            0%, 100% { border-color: rgba(0, 255, 136, 0.3); }
+            50% { border-color: rgba(0, 255, 136, 0.8); }
+        }
+
+        .animate-border {
+            animation: pulseBorder 3s infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .glitch-hover:hover {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 0.75rem;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #070b12; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00e5ff; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-black">
+    <div class="crt-overlay"></div>
+
+    <!-- TOP HUD / HEADER -->
+    <header class="sticky top-0 z-40 cyber-panel border-b border-cyan-500/30 px-4 py-3">
+        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-400 flex items-center justify-center text-emerald-400 font-bold text-xl shadow-[0_0_15px_rgba(0,255,136,0.3)]">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="font-display font-bold text-lg sm:text-xl tracking-wider text-white">
+                        CYBER<span class="text-emerald-400 glow-green">GUARD</span> <span class="text-xs text-cyan-400 font-mono">v4.2</span>
+                    </h1>
+                    <p class="text-[11px] text-slate-400 hidden sm:block">PROTOCOLO DE TREINAMENTO DE DEFESA CIBERNÉTICA</p>
+                </div>
+            </div>
+
+            <!-- Barra de Progresso & Pontuação -->
+            <div id="hud-stats" class="hidden flex-1 max-w-md mx-4">
+                <div class="flex justify-between text-xs mb-1">
+                    <span class="text-cyan-400" id="hud-stage-label">MÓDULO 1/4</span>
+                    <span class="text-slate-400" id="hud-progress-text">0% CONCLUÍDO</span>
+                </div>
+                <div class="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden border border-slate-700">
+                    <div id="hud-progress-bar" class="h-full bg-gradient-to-r from-cyan-400 to-emerald-400 transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button id="btn-sound" onclick="toggleAudio()" title="Alternar Áudio" class="p-2 rounded-lg bg-slate-800/80 border border-slate-700 text-cyan-400 hover:border-cyan-400 transition">
+                    <svg id="icon-sound-on" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+                    <svg id="icon-sound-off" class="w-5 h-5 hidden text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path></svg>
+                </button>
+                <div class="px-4 py-1.5 rounded-lg bg-slate-900 border border-emerald-500/40 flex items-center gap-2">
+                    <span class="text-xs text-slate-400">SCORE:</span>
+                    <span id="hud-score" class="font-display font-bold text-lg text-emerald-400 glow-green">0000</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow max-w-5xl w-full mx-auto p-4 sm:p-6 flex flex-col justify-center">
+
+        <!-- TELA 0: INÍCIO / BRIEFING -->
+        <section id="screen-intro" class="cyber-panel rounded-2xl p-6 sm:p-10 animate-border space-y-8">
+            <!-- Cabeçalho da Missão -->
+            <div class="space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    SISTEMA DE TREINAMENTO ONLINE
+                </div>
+                <h2 class="font-display text-3xl sm:text-4xl font-black text-white leading-tight">
+                    VOCÊ ESTÁ PRONTO PARA DEFENDER A <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">REDE GLOBAL?</span>
+                </h2>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-3xl">
+                    Bem-vindo(a), Recruta. Nossa infraestrutura está sob ataque constante. Você passará por <strong class="text-cyan-400">4 simulações críticas</strong> em tempo real para provar sua capacidade de neutralizar ameaças digitais e proteger dados confidenciais.
+                </p>
+            </div>
+
+            <!-- Grade 2x2 Limpa dos 4 Módulos -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+                <div class="p-4 rounded-xl bg-slate-900/85 border border-slate-800 hover:border-cyan-500/40 transition flex items-center gap-4">
+                    <span class="text-cyan-400 font-display font-bold text-lg shrink-0">01</span>
+                    <div>
+                        <div class="font-bold text-white">Detector de Phishing</div>
+                        <div class="text-slate-400 text-xs mt-0.5">Auditoria forense de e-mails</div>
+                    </div>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-900/85 border border-slate-800 hover:border-emerald-500/40 transition flex items-center gap-4">
+                    <span class="text-emerald-400 font-display font-bold text-lg shrink-0">02</span>
+                    <div>
+                        <div class="font-bold text-white">Forja de Senhas</div>
+                        <div class="text-slate-400 text-xs mt-0.5">Resistência à força bruta</div>
+                    </div>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-900/85 border border-slate-800 hover:border-purple-500/40 transition flex items-center gap-4">
+                    <span class="text-purple-400 font-display font-bold text-lg shrink-0">03</span>
+                    <div>
+                        <div class="font-bold text-white">Defesa de Firewall</div>
+                        <div class="text-slate-400 text-xs mt-0.5">Filtragem de pacotes em tempo real</div>
+                    </div>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-900/85 border border-slate-800 hover:border-amber-500/40 transition flex items-center gap-4">
+                    <span class="text-amber-400 font-display font-bold text-lg shrink-0">04</span>
+                    <div>
+                        <div class="font-bold text-white">Engenharia Social</div>
+                        <div class="text-slate-400 text-xs mt-0.5">Resposta rápida a incidentes</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contêiner Dedicado de Autenticação + Terminal Simulado -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch pt-2 border-t border-slate-800/80">
+                <!-- Formulário de Codinome & Aviso OPSEC -->
+                <div class="lg:col-span-7 flex flex-col justify-between space-y-4">
+                    <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+                        <input type="text" id="player-name-input" placeholder="Digite um codinome fictício..." maxlength="24"
+                            class="px-4 py-3.5 rounded-xl bg-slate-950 border border-cyan-500/40 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 flex-1 min-w-0 text-sm">
+                        <button onclick="startGame()" class="cyber-btn px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 font-display font-bold text-sm shadow-lg shrink-0 whitespace-nowrap cursor-pointer">
+                            INICIAR MISSÃO &gt;_
+                        </button>
+                    </div>
+
+                    <!-- Banner de Alerta OPSEC -->
+                    <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/40 flex items-start gap-3 text-xs leading-relaxed">
+                        <svg class="w-5 h-5 text-amber-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                        <p class="text-amber-200/90">
+                            <strong class="text-amber-400">ALERTA OPSEC (PRIVACIDADE):</strong> Nunca exponha sua identidade real na rede. <strong class="text-white">NÃO digite seu nome verdadeiro nem seu apelido pessoal</strong>; utilize apenas um codinome fictício.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Terminal Decorativo -->
+                <div class="lg:col-span-5 bg-slate-950 rounded-xl border border-slate-800 p-4 font-mono text-xs text-emerald-400 shadow-inner flex flex-col justify-between">
+                    <div class="flex items-center gap-1.5 pb-2.5 mb-2.5 border-b border-slate-800">
+                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                        <span class="ml-2 text-slate-500 text-[10px]">root@cyberguard:~</span>
+                    </div>
+                    <div class="space-y-1.5 text-[11px] leading-relaxed">
+                        <p class="text-slate-400">$ ./init_defense_matrix.sh</p>
+                        <p>[OK] Carregando heurística anti-phishing...</p>
+                        <p>[OK] Módulos de entropia criptográfica ativos.</p>
+                        <p>[OK] Regras de pacote TCP/UDP prontas.</p>
+                        <p class="text-amber-400">[ALERTA] 14 tentativas de intrusão detectadas na última hora.</p>
+                        <p class="text-cyan-400 animate-pulse">&gt; Aguardando autenticação do operador...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÓDULO 1: DETECTOR DE PHISHING -->
+        <section id="screen-stage-1" class="hidden space-y-5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                    <span class="text-xs text-cyan-400 font-bold tracking-widest uppercase">Módulo 01 // Análise Forense</span>
+                    <h2 class="font-display text-2xl font-bold text-white">DETECTOR DE PHISHING</h2>
+                </div>
+                <span id="phishing-counter" class="px-3 py-1 rounded-lg bg-slate-900 border border-cyan-500/30 text-xs text-cyan-300">
+                    E-mail 1 de 4
+                </span>
+            </div>
+
+            <p class="text-sm text-slate-300">
+                Inspecione cuidadosamente o remetente, o domínio do link (passe o mouse ou toque no botão de link) e o tom da mensagem. Determine se o e-mail é <strong class="text-emerald-400">LEGÍTIMO</strong> ou <strong class="text-rose-400">PHISHING</strong>.
+            </p>
+
+            <!-- Cliente de E-mail Simulado -->
+            <div class="cyber-panel rounded-2xl overflow-hidden border border-slate-700">
+                <!-- Barra Superior do E-mail -->
+                <div class="bg-slate-900/90 px-5 py-4 border-b border-slate-800 space-y-2">
+                    <div class="flex flex-wrap justify-between items-start gap-2">
+                        <div>
+                            <span class="text-xs text-slate-400">De:</span>
+                            <span id="email-sender-name" class="font-bold text-white text-sm ml-1">Suporte TI</span>
+                            <span id="email-sender-addr" class="text-xs text-cyan-400 bg-slate-950 px-2 py-0.5 rounded border border-slate-800 ml-1">&lt;suporte@empresa.com&gt;</span>
+                        </div>
+                        <span id="email-date" class="text-xs text-slate-500">Hoje, 09:14</span>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400">Assunto:</span>
+                        <span id="email-subject" class="font-bold text-amber-300 text-sm ml-1">Assunto do e-mail</span>
+                    </div>
+                </div>
+
+                <!-- Corpo do E-mail e Link Inspecionável -->
+                <div class="p-5 sm:p-6 bg-slate-950/80 space-y-5">
+                    <div id="email-body" class="text-sm text-slate-200 leading-relaxed space-y-3">
+                        <!-- Conteúdo inserido via JS -->
+                    </div>
+
+                    <div class="pt-2 space-y-3">
+                        <button id="email-cta-btn" onclick="toggleLinkPreview()" class="px-5 py-2.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/60 text-cyan-300 font-bold text-xs sm:text-sm transition cursor-pointer">
+                            Verificar Link
+                        </button>
+                        <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 text-xs flex flex-wrap items-center gap-2">
+                            <span class="text-slate-400">URL de destino detectada:</span>
+                            <code id="email-real-url" class="text-amber-300 break-all font-mono">https://...</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botões de Decisão -->
+                <div id="phishing-actions" class="p-4 bg-slate-900 border-t border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <button onclick="answerPhishing(false)" class="cyber-btn py-3.5 px-6 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500 text-emerald-400 font-bold flex items-center justify-center gap-2 cursor-pointer">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        E-MAIL LEGÍTIMO (SEGURO)
+                    </button>
+                    <button onclick="answerPhishing(true)" class="cyber-btn py-3.5 px-6 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500 text-rose-400 font-bold flex items-center justify-center gap-2 cursor-pointer">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        REPORTAR PHISHING (AMEAÇA)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÓDULO 2: CRIADOR DE SENHAS FORTES -->
+        <section id="screen-stage-2" class="hidden space-y-5">
+            <div>
+                <span class="text-xs text-emerald-400 font-bold tracking-widest uppercase">Módulo 02 // Criptografia & Autenticação</span>
+                <h2 class="font-display text-2xl font-bold text-white">FORJA DE SENHA ANTI-BRUTE FORCE</h2>
+            </div>
+
+            <p class="text-sm text-slate-300">
+                Supercomputadores modernos podem testar bilhões de combinações por segundo. Crie uma senha mestre que atinja <strong class="text-emerald-400">100% de segurança</strong> e resista por séculos contra ataques de força bruta e dicionário.
+            </p>
+
+            <div class="cyber-panel rounded-2xl p-6 space-y-6">
+                <!-- Campo de Senha -->
+                <div class="space-y-2">
+                    <label class="text-xs text-cyan-400 uppercase tracking-wider">Digite sua senha de alta entropia:</label>
+                    <div class="relative flex items-center">
+                        <input type="text" id="password-input" oninput="evaluatePassword()" autocomplete="off"
+                            placeholder="Ex: C@fe-Quente#2026!Nave"
+                            class="w-full px-4 py-4 rounded-xl bg-slate-950 border-2 border-slate-700 focus:border-cyan-400 text-lg sm:text-xl font-mono text-white focus:outline-none pr-24">
+                        <button onclick="generatePassphraseHint()" class="absolute right-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-cyan-300 border border-slate-600 cursor-pointer">
+                            Dica 💡
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Medidor Visual & Tempo de Quebra -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-400">FORÇA CRIPTOGRÁFICA</span>
+                            <span id="pwd-strength-label" class="font-bold text-rose-400">MUITO FRACA (0%)</span>
+                        </div>
+                        <div class="w-full h-3 bg-slate-900 rounded-full overflow-hidden">
+                            <div id="pwd-strength-bar" class="h-full bg-rose-500 transition-all duration-300" style="width: 5%"></div>
+                        </div>
+                        <p class="text-[11px] text-slate-500">Entropia estimada: <span id="pwd-entropy" class="text-slate-300">0 bits</span></p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 flex flex-col justify-center">
+                        <span class="text-xs text-slate-400">TEMPO PARA QUEBRA (GPU CLUSTER):</span>
+                        <span id="pwd-crack-time" class="font-display text-xl sm:text-2xl font-bold text-rose-400 mt-1">Instantâneo</span>
+                    </div>
+                </div>
+
+                <!-- Checklist de Requisitos -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div id="req-length" class="p-3 rounded-lg bg-slate-900/70 border border-slate-800 flex items-center gap-2.5 text-slate-400">
+                        <span class="status-icon">○</span> Mínimo de 14 caracteres (comprimento é rei)
+                    </div>
+                    <div id="req-upper-lower" class="p-3 rounded-lg bg-slate-900/70 border border-slate-800 flex items-center gap-2.5 text-slate-400">
+                        <span class="status-icon">○</span> Letras MAIÚSCULAS e minúsculas
+                    </div>
+                    <div id="req-number" class="p-3 rounded-lg bg-slate-900/70 border border-slate-800 flex items-center gap-2.5 text-slate-400">
+                        <span class="status-icon">○</span> Pelo menos 2 números não sequenciais
+                    </div>
+                    <div id="req-symbol" class="p-3 rounded-lg bg-slate-900/70 border border-slate-800 flex items-center gap-2.5 text-slate-400">
+                        <span class="status-icon">○</span> Pelo menos 2 símbolos especiais (!@#$%&*)
+                    </div>
+                    <div id="req-no-common" class="sm:col-span-2 p-3 rounded-lg bg-slate-900/70 border border-slate-800 flex items-center gap-2.5 text-slate-400">
+                        <span class="status-icon">○</span> Sem padrões óbvios (1234, qwerty, senha, admin, 2025/2026)
+                    </div>
+                </div>
+
+                <div class="flex justify-end pt-2">
+                    <button id="btn-submit-password" onclick="submitPasswordStage()" disabled
+                        class="cyber-btn px-8 py-3.5 rounded-xl bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed text-slate-950 font-display font-bold text-sm cursor-pointer">
+                        VALIDAR CHAVE DE ACESSO
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÓDULO 3: DEFESA DE REDE / FIREWALL -->
+        <section id="screen-stage-3" class="hidden space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                    <span class="text-xs text-purple-400 font-bold tracking-widest uppercase">Módulo 03 // Segurança de Perímetro</span>
+                    <h2 class="font-display text-2xl font-bold text-white">FIREWALL INTERCEPTOR</h2>
+                </div>
+                <div class="flex items-center gap-3 text-xs">
+                    <div class="px-3 py-1.5 rounded-lg bg-slate-900 border border-emerald-500/40 text-emerald-400">
+                        Integridade do Servidor: <strong id="fw-health">100%</strong>
+                    </div>
+                    <div class="px-3 py-1.5 rounded-lg bg-slate-900 border border-cyan-500/40 text-cyan-400">
+                        Tempo: <strong id="fw-timer">30s</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cyber-panel rounded-2xl p-4 space-y-3">
+                <div class="flex flex-wrap items-center justify-between gap-2 text-xs bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
+                        <span class="text-rose-300"><strong>CLIQUE / TOQUE</strong> nos pacotes maliciosos (<code class="text-rose-400">MALWARE, DDoS, SQLi, TROJAN</code>) para bloqueá-los!</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
+                        <span class="text-emerald-300"><strong>DEIXE PASSAR</strong> o tráfego legítimo (<code class="text-emerald-400">HTTPS, DNS, SSH-OK</code>).</span>
+                    </div>
+                </div>
+
+                <!-- Container Responsivo do Canvas -->
+                <div id="firewall-canvas-container" class="relative w-full h-80 sm:h-96 bg-slate-950 rounded-xl border border-cyan-500/30 overflow-hidden">
+                    <canvas id="firewall-canvas"></canvas>
+                    
+                    <!-- Overlay de Início do Minijogo -->
+                    <div id="fw-start-overlay" class="absolute inset-0 bg-slate-950/90 flex flex-col items-center justify-center p-6 text-center space-y-4">
+                        <div class="w-14 h-14 rounded-full bg-purple-500/20 border border-purple-400 flex items-center justify-center text-purple-400">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-white">TRÁFEGO DE REDE INCOMING</h3>
+                        <p class="text-xs sm:text-sm text-slate-300 max-w-md">
+                            Pacotes estão cruzando a rede da esquerda para o núcleo do servidor à direita. Destrua as ameaças vermelhas antes que atinjam o núcleo e não bloqueie os pacotes verdes legítimos!
+                        </p>
+                        <button onclick="startFirewallGame()" class="cyber-btn px-6 py-3 rounded-xl bg-purple-500 hover:bg-purple-400 text-white font-display font-bold text-sm cursor-pointer">
+                            ATIVAR FIREWALL AGORA
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÓDULO 4: QUIZ RÁPIDO DE ENGENHARIA SOCIAL -->
+        <section id="screen-stage-4" class="hidden space-y-5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                    <span class="text-xs text-amber-400 font-bold tracking-widest uppercase">Módulo 04 // Fator Humano</span>
+                    <h2 class="font-display text-2xl font-bold text-white">DEFESA CONTRA ENGENHARIA SOCIAL</h2>
+                </div>
+                <span id="quiz-counter" class="px-3 py-1 rounded-lg bg-slate-900 border border-amber-500/30 text-xs text-amber-300">
+                    Cenário 1 de 4
+                </span>
+            </div>
+
+            <div class="cyber-panel rounded-2xl p-6 space-y-6">
+                <div class="p-4 rounded-xl bg-slate-950 border-l-4 border-amber-400 space-y-2">
+                    <span id="quiz-tag" class="text-[11px] uppercase tracking-wider text-amber-400 font-bold">CENÁRIO CRÍTICO</span>
+                    <h3 id="quiz-question" class="text-base sm:text-lg font-bold text-white leading-snug">
+                        Carregando cenário...
+                    </h3>
+                </div>
+
+                <div id="quiz-options" class="space-y-3">
+                    <!-- Opções inseridas via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TELA FINAL: CERTIFICADO E RANKING -->
+        <section id="screen-final" class="hidden space-y-6">
+            <div class="cyber-panel rounded-2xl p-6 sm:p-10 border-2 border-emerald-400/50 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
+                    <svg class="w-48 h-48 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                </div>
+
+                <div class="text-center space-y-3 max-w-2xl mx-auto">
+                    <span class="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 text-xs font-bold tracking-widest">
+                        CERTIFICAÇÃO OFICIAL CYBERGUARD
+                    </span>
+                    <h2 class="font-display text-2xl sm:text-4xl font-black text-white">
+                        TREINAMENTO CONCLUÍDO
+                    </h2>
+                    <p class="text-slate-400 text-xs sm:text-sm">
+                        Este documento certifica que o operador abaixo completou todas as simulações de defesa cibernética.
+                    </p>
+                </div>
+
+                <!-- Cartão de Certificado -->
+                <div class="my-8 p-6 rounded-xl bg-slate-950/90 border border-cyan-500/40 text-center space-y-4">
+                    <div class="text-xs text-slate-400 uppercase tracking-widest">AGENTE CERTIFICADO</div>
+                    <div id="cert-player-name" class="font-display text-2xl sm:text-3xl font-bold text-cyan-400 glow-cyan">
+                        AGENTE ANÔNIMO
+                    </div>
+                    <div class="inline-block px-4 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/40">
+                        <span class="text-xs text-slate-300">PATENTE ALCANÇADA: </span>
+                        <strong id="cert-rank" class="text-emerald-400 font-display tracking-wide">ESPECIALISTA CIBER-DEFENSOR</strong>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-slate-800 text-xs">
+                        <div class="p-2.5 rounded-lg bg-slate-900">
+                            <div class="text-slate-400">PONTUAÇÃO TOTAL</div>
+                            <div id="cert-total-score" class="font-display text-lg font-bold text-emerald-400">0</div>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-slate-900">
+                            <div class="text-slate-400">PRECISÃO</div>
+                            <div id="cert-accuracy" class="font-display text-lg font-bold text-cyan-400">100%</div>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-slate-900">
+                            <div class="text-slate-400">MÓDULOS</div>
+                            <div class="font-display text-lg font-bold text-white">4 / 4</div>
+                        </div>
+                        <div class="p-2.5 rounded-lg bg-slate-900">
+                            <div class="text-slate-400">HASH ID</div>
+                            <div id="cert-hash" class="font-mono text-sm font-bold text-amber-400 mt-0.5">#CG-99X</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumo de Desempenho por Módulo -->
+                <div class="space-y-2 mb-6">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">RELATÓRIO DE TELEMETRIA POR MÓDULO:</h3>
+                    <div id="cert-breakdown" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs"></div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="copyCertificate()" class="cyber-btn px-6 py-3 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400 text-cyan-300 font-bold text-xs sm:text-sm cursor-pointer">
+                        COPIAR CREDENCIAL 📋
+                    </button>
+                    <button onclick="resetGame()" class="cyber-btn px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-display font-bold text-xs sm:text-sm cursor-pointer">
+                        REINICIAR SIMULAÇÃO ↻
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL DE FEEDBACK EDUCATIVO -->
+    <div id="feedback-modal" class="fixed inset-0 z-50 hidden bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="cyber-panel max-w-lg w-full rounded-2xl p-6 border-2 transition-all space-y-4" id="feedback-card">
+            <div class="flex items-center gap-3">
+                <div id="feedback-icon" class="w-10 h-10 rounded-xl flex items-center justify-center text-xl font-bold shrink-0"></div>
+                <div>
+                    <div id="feedback-badge" class="text-[11px] font-bold uppercase tracking-wider">ANÁLISE CONCLUÍDA</div>
+                    <h3 id="feedback-title" class="font-display text-lg font-bold text-white">Título do Feedback</h3>
+                </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-sm text-slate-200 leading-relaxed space-y-2" id="feedback-body">
+            </div>
+
+            <div class="flex items-center justify-between pt-2">
+                <span id="feedback-points" class="font-display font-bold text-sm text-emerald-400">+100 PTS</span>
+                <button id="feedback-next-btn" onclick="closeFeedbackModal()" class="cyber-btn px-6 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-display font-bold text-xs sm:text-sm cursor-pointer">
+                    CONTINUAR &gt;&gt;
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST DE NOTIFICAÇÃO RÁPIDA -->
+    <div id="toast-msg" class="fixed bottom-5 right-5 z-50 hidden px-4 py-3 rounded-xl bg-slate-900 border border-cyan-400 text-cyan-300 text-xs shadow-2xl">
+    </div>
+
+    <footer class="text-center py-4 text-[11px] text-slate-500 border-t border-slate-900">
+        CYBERGUARD OS // SIMULADOR EDUCACIONAL DE SEGURANÇA DA INFORMAÇÃO
+    </footer>
+
+    <script>
+        /* =========================================================================
+           SISTEMA DE ÁUDIO SINTETIZADO (TONE.JS)
+           ========================================================================= */
+        let audioEnabled = true;
+        let synth = null;
+
+        async function initAudio() {
+            if (!synth && typeof Tone !== 'undefined') {
+                await Tone.start();
+                synth = new Tone.PolySynth(Tone.Synth, {
+                    oscillator: { type: "triangle" },
+                    envelope: { attack: 0.01, decay: 0.1, sustain: 0.05, release: 0.2 }
+                }).toDestination();
+                synth.volume.value = -10;
+            }
+        }
+
+        function playSound(type) {
+            if (!audioEnabled || !synth) return;
+            try {
+                const now = Tone.now();
+                if (type === 'success') {
+                    synth.triggerAttackRelease(["C5", "E5", "G5"], "16n", now);
+                } else if (type === 'error') {
+                    synth.triggerAttackRelease(["C3", "F#2"], "8n", now);
+                } else if (type === 'click') {
+                    synth.triggerAttackRelease("A5", "32n", now);
+                } else if (type === 'laser') {
+                    synth.triggerAttackRelease("G5", "32n", now);
+                }
+            } catch (e) { /* Ignora erro caso contexto de áudio não tenha iniciado */ }
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            document.getElementById('icon-sound-on').classList.toggle('hidden', !audioEnabled);
+            document.getElementById('icon-sound-off').classList.toggle('hidden', audioEnabled);
+            showToast(audioEnabled ? "Áudio do terminal ativado." : "Áudio silenciado.");
+        }
+
+        /* =========================================================================
+           ESTADO GLOBAL DO JOGO
+           ========================================================================= */
+        const gameState = {
+            playerName: "Agente CyberGuard",
+            score: 0,
+            currentStage: 0,
+            stageScores: { 1: 0, 2: 0, 3: 0, 4: 0 },
+            maxPossibleScore: 1400,
+            phishingIndex: 0,
+            quizIndex: 0,
+            pendingCallback: null
+        };
+
+        /* =========================================================================
+           BANCO DE DADOS DOS DESAFIOS
+           ========================================================================= */
+        const phishingEmails = [
+            {
+                senderName: "Segurança Banco Bradesco",
+                senderAddr: "alertas@bradesco-seguranca-atualiza.com.br",
+                date: "Hoje, 08:42",
+                subject: "URGENTE: Sua conta será bloqueada em 2 horas!",
+                body: [
+                    "Prezado(a) Cliente,",
+                    "Detectamos um acesso não autorizado vindo de um dispositivo desconhecido em sua conta corrente.",
+                    "Para evitar o bloqueio permanente e multa contratual, confirme sua chave de segurança e senha imediatamente no link abaixo."
+                ],
+                ctaText: "Desbloquear Conta Agora",
+                realUrl: "http://bradesco-seguranca-atualiza.com.br/login-token",
+                isPhishing: true,
+                explanation: "<strong>3 Sinais Clássicos de Phishing:</strong><br>1. <b>Domínio falso:</b> O domínio oficial é <code>bradesco.com.br</code>, não <code>bradesco-seguranca-atualiza.com.br</code>.<br>2. <b>Senso de urgência artificial:</b> Ameaça de bloqueio em 2 horas para induzir pânico.<br>3. <b>Protocolo HTTP inseguro:</b> Sites bancários nunca pedem senha por link de e-mail."
+            },
+            {
+                senderName: "Equipe de TI Interna",
+                senderAddr: "suporte.ti@suaempresa.com.br",
+                date: "Hoje, 10:15",
+                subject: "Manutenção programada da VPN neste domingo",
+                body: [
+                    "Olá equipe,",
+                    "Informamos que neste domingo, das 02h às 05h, realizaremos a atualização dos certificados da nossa VPN corporativa.",
+                    "Nenhuma ação é necessária no momento. Caso tenha dúvidas, consulte o portal interno na intranet."
+                ],
+                ctaText: "Ler Comunicado na Intranet",
+                realUrl: "https://intranet.suaempresa.com.br/avisos/manutencao-vpn",
+                isPhishing: false,
+                explanation: "<strong>E-mail Legítimo!</strong><br>O remetente utiliza o domínio corporativo exato (<code>@suaempresa.com.br</code>), o link aponta para a intranet oficial via <code>HTTPS</code> e não solicita credenciais, senhas ou ações urgentes suspeitas."
+            },
+            {
+                senderName: "Microsoft 365 Admin",
+                senderAddr: "no-reply@rnicrosoft-support.com",
+                date: "Ontem, 19:50",
+                subject: "Aviso de expiração de senha corporativa",
+                body: [
+                    "Sua senha do Microsoft 365 expira hoje à meia-noite.",
+                    "Mantenha sua mesma senha atual clicando abaixo para validar sua sessão ativa e não perder acesso aos seus e-mails."
+                ],
+                ctaText: "Manter Senha Atual",
+                realUrl: "https://login.rnicrosoft-support.com/auth/office365",
+                isPhishing: true,
+                explanation: "<strong>Ataque de Typosquatting (Homógrafo)!</strong><br>Observe atentamente o remetente e a URL: está escrito <code>rnicrosoft</code> (com <b>R + N</b> juntos imitando a letra <b>M</b>). Atacantes usam semelhança visual para enganar leitores apressados."
+            },
+            {
+                senderName: "RH - Benefícios",
+                senderAddr: "rh@suaempresa.com.br",
+                date: "Ontem, 14:20",
+                subject: "Planilha de Reajuste Salarial 2026 (Confidencial)",
+                body: [
+                    "Olá,",
+                    "Por engano, a diretoria liberou o arquivo com os novos salários de todos os departamentos.",
+                    "Baixe o arquivo anexo <code>Reajuste_2026.xlsm</code> e habilite as macros para visualizar."
+                ],
+                ctaText: "Baixar Planilha (.xlsm)",
+                realUrl: "https://cloud-files-share-anon.net/download/Reajuste_2026.xlsm",
+                isPhishing: true,
+                explanation: "<strong>Isca de Curiosidade + Malware!</strong><br>Mesmo que o campo 'De' pareça correto (spoofing), o link aponta para um servidor externo desconhecido oferecendo um arquivo <code>.xlsm</code> (Excel com Macros) — um vetor clássico para instalação de Ransomware."
+            }
+        ];
+
+        const socialEngQuizzes = [
+            {
+                tag: "PRETEXTING // FALSO SUPORTE",
+                question: "Você recebe uma ligação no ramal da empresa. A pessoa diz ser do Suporte de TI e afirma: 'Estamos atualizando o servidor de e-mail e preciso que você me informe seu código MFA (autenticação de dois fatores) que acabou de chegar no seu celular.' O que você faz?",
+                options: [
+                    { text: "Informo o código rapidamente para não atrasar a manutenção do servidor.", correct: false },
+                    { text: "Recuso informar o código, desligo e abro um chamado oficial com a equipe de TI.", correct: true },
+                    { text: "Peço para ele me enviar um e-mail confirmando o nome dele e depois passo o código.", correct: false }
+                ],
+                explanation: "<strong>Nunca compartilhe códigos MFA/2FA!</strong> Equipes legítimas de TI jamais pedem sua senha ou código de verificação. Esse golpe intercepta seu segundo fator em tempo real enquanto o atacante tenta fazer login com sua senha vazada."
+            },
+            {
+                tag: "BAITING // MÍDIA FÍSICA",
+                question: "Ao chegar no estacionamento da empresa, você encontra um pen drive com uma etiqueta escrita 'Folha de Pagamento - Confidencial'. Qual é a atitude segura?",
+                options: [
+                    { text: "Conectar no meu computador de trabalho com o antivírus ligado para ver quem é o dono.", correct: false },
+                    { text: "Conectar em um computador antigo sem internet para verificar os arquivos.", correct: false },
+                    { text: "Não conectar em nenhum dispositivo e entregar imediatamente à equipe de Segurança da Informação.", correct: true }
+                ],
+                explanation: "<strong>Golpe clássico de Baiting (Isca)!</strong> Pen drives abandonados podem conter dispositivos 'Rubber Ducky' que simulam um teclado e executam comandos maliciosos em milissegundos assim que plugados, burlando até antivírus."
+            },
+            {
+                tag: "TAILGATING // ACESSO FÍSICO",
+                question: "Você está entrando na área restrita do escritório usando seu crachá magnético. Logo atrás vem uma pessoa vestindo uniforme de entrega carregando duas caixas pesadas e pedindo: 'Pode segurar a porta pra mim, por favor?'",
+                options: [
+                    { text: "Seguro a porta por educação, já que ele está carregando caixas pesadas.", correct: false },
+                    { text: "Explico educadamente que a política exige registro na recepção e acompanho-o até lá.", correct: true },
+                    { text: "Deixo ele entrar, mas fico olhando para onde ele vai.", correct: false }
+                ],
+                explanation: "<strong>Segurança física é cibersegurança!</strong> O ataque de <em>Tailgating</em> (carona) explora a gentileza humana para obter acesso físico a salas, portas de rede desprotegidas e computadores desbloqueados."
+            },
+            {
+                tag: "VISHING & CEO FRAUD",
+                question: "Você recebe uma mensagem urgente no WhatsApp supostamente do Diretor Financeiro (usando a foto dele, mas de um número novo), pedindo uma transferência PIX imediata para fechar um contrato sigiloso.",
+                options: [
+                    { text: "Faço a transferência imediatamente para demonstrar agilidade à diretoria.", correct: false },
+                    { text: "Respondo no próprio WhatsApp perguntando se é realmente ele.", correct: false },
+                    { text: "Ligo diretamente para o número corporativo conhecido do Diretor para confirmar por voz.", correct: true }
+                ],
+                explanation: "<strong>Verificação Out-of-Band (Fora de Banda)!</strong> Atacantes clonam fotos e criam senso de autoridade e sigilo. Sempre valide transações financeiras por um canal secundário oficial previamente conhecido."
+            }
+        ];
+
+        /* =========================================================================
+           NAVEGAÇÃO E UTILITÁRIOS DE UI
+           ========================================================================= */
+        function showScreen(screenId) {
+            const sections = ['screen-intro', 'screen-stage-1', 'screen-stage-2', 'screen-stage-3', 'screen-stage-4', 'screen-final'];
+            sections.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(screenId).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateHUD(stageNum, progressPercent) {
+            const hudStats = document.getElementById('hud-stats');
+            hudStats.classList.remove('hidden');
+            document.getElementById('hud-stage-label').textContent = `MÓDULO ${stageNum}/4`;
+            document.getElementById('hud-progress-text').textContent = `${Math.round(progressPercent)}% CONCLUÍDO`;
+            document.getElementById('hud-progress-bar').style.width = `${progressPercent}%`;
+            document.getElementById('hud-score').textContent = String(gameState.score).padStart(4, '0');
+        }
+
+        function addScore(stage, pts) {
+            gameState.score = Math.max(0, gameState.score + pts);
+            gameState.stageScores[stage] = Math.max(0, (gameState.stageScores[stage] || 0) + pts);
+            document.getElementById('hud-score').textContent = String(gameState.score).padStart(4, '0');
+        }
+
+        function showFeedback(isSuccess, title, htmlBody, pointsText, callback) {
+            playSound(isSuccess ? 'success' : 'error');
+            const modal = document.getElementById('feedback-modal');
+            const card = document.getElementById('feedback-card');
+            const icon = document.getElementById('feedback-icon');
+            const badge = document.getElementById('feedback-badge');
+            const ptsEl = document.getElementById('feedback-points');
+
+            card.className = `cyber-panel max-w-lg w-full rounded-2xl p-6 border-2 transition-all space-y-4 ${
+                isSuccess ? 'border-emerald-400 shadow-[0_0_30px_rgba(0,255,136,0.25)]' : 'border-rose-500 shadow-[0_0_30px_rgba(255,42,85,0.25)]'
+            }`;
+
+            icon.className = `w-10 h-10 rounded-xl flex items-center justify-center text-xl font-bold shrink-0 ${
+                isSuccess ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-400' : 'bg-rose-500/20 text-rose-400 border border-rose-500'
+            }`;
+            icon.textContent = isSuccess ? '✓' : '✕';
+
+            badge.className = `text-[11px] font-bold uppercase tracking-wider ${isSuccess ? 'text-emerald-400' : 'text-rose-400'}`;
+            badge.textContent = isSuccess ? 'AMEAÇA NEUTRALIZADA / AÇÃO CORRETA' : 'FALHA DE SEGURANÇA DETECTADA';
+
+            document.getElementById('feedback-title').textContent = title;
+            document.getElementById('feedback-body').innerHTML = htmlBody;
+            
+            ptsEl.className = `font-display font-bold text-sm ${isSuccess ? 'text-emerald-400' : 'text-rose-400'}`;
+            ptsEl.textContent = pointsText;
+
+            gameState.pendingCallback = callback;
+            modal.classList.remove('hidden');
+        }
+
+        function closeFeedbackModal() {
+            playSound('click');
+            document.getElementById('feedback-modal').classList.add('hidden');
+            if (typeof gameState.pendingCallback === 'function') {
+                const cb = gameState.pendingCallback;
+                gameState.pendingCallback = null;
+                cb();
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast-msg');
+            toast.textContent = msg;
+            toast.classList.remove('hidden');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.add('hidden'), 3000);
+        }
+
+        /* =========================================================================
+           FLUXO PRINCIPAL DO JOGO
+           ========================================================================= */
+        async function startGame() {
+            await initAudio();
+            playSound('success');
+
+            const nameInput = document.getElementById('player-name-input').value.trim();
+            gameState.playerName = nameInput || "Agente CyberGuard";
+            gameState.score = 0;
+            gameState.stageScores = { 1: 0, 2: 0, 3: 0, 4: 0 };
+            gameState.phishingIndex = 0;
+            gameState.quizIndex = 0;
+
+            startStage1();
+        }
+
+        /* =========================================================================
+           MÓDULO 1: DETECTOR DE PHISHING
+           ========================================================================= */
+        function startStage1() {
+            gameState.currentStage = 1;
+            updateHUD(1, 5);
+            showScreen('screen-stage-1');
+            renderPhishingEmail();
+        }
+
+        function renderPhishingEmail() {
+            const idx = gameState.phishingIndex;
+            const email = phishingEmails[idx];
+
+            document.getElementById('phishing-counter').textContent = `E-mail ${idx + 1} de ${phishingEmails.length}`;
+            document.getElementById('email-sender-name').textContent = email.senderName;
+            document.getElementById('email-sender-addr').textContent = `<${email.senderAddr}>`;
+            document.getElementById('email-date').textContent = email.date;
+            document.getElementById('email-subject').textContent = email.subject;
+            document.getElementById('email-cta-btn').textContent = email.ctaText;
+            document.getElementById('email-real-url').textContent = email.realUrl;
+
+            const bodyContainer = document.getElementById('email-body');
+            bodyContainer.innerHTML = email.body.map(p => `<p>${p}</p>`).join('');
+        }
+
+        function toggleLinkPreview() {
+            playSound('click');
+            showToast("Inspeção de URL: Verifique sempre o domínio principal antes da primeira barra '/'!");
+        }
+
+        function answerPhishing(userSaidPhishing) {
+            const email = phishingEmails[gameState.phishingIndex];
+            const isCorrect = (userSaidPhishing === email.isPhishing);
+
+            if (isCorrect) {
+                addScore(1, 100);
+            }
+
+            showFeedback(
+                isCorrect,
+                isCorrect ? "Análise Forense Precisa!" : "Alerta de Comprometimento!",
+                email.explanation,
+                isCorrect ? "+100 PTS" : "+0 PTS",
+                () => {
+                    gameState.phishingIndex++;
+                    updateHUD(1, (gameState.phishingIndex / phishingEmails.length) * 25);
+                    if (gameState.phishingIndex < phishingEmails.length) {
+                        renderPhishingEmail();
+                    } else {
+                        startStage2();
+                    }
+                }
+            );
+        }
+
+        /* =========================================================================
+           MÓDULO 2: CRIADOR DE SENHAS FORTES
+           ========================================================================= */
+        function startStage2() {
+            gameState.currentStage = 2;
+            updateHUD(2, 25);
+            showScreen('screen-stage-2');
+            document.getElementById('password-input').value = "";
+            evaluatePassword();
+        }
+
+        function generatePassphraseHint() {
+            playSound('click');
+            const samples = [
+                "Tigre#Azul94!Montanha$",
+                "Cafe@Quente82*Orbita!",
+                "Foguete$73Lunar#Escudo!"
+            ];
+            const pick = samples[Math.floor(Math.random() * samples.length)];
+            showToast(`Dica de Passphrase: Combine palavras aleatórias + símbolos e números. Ex: ${pick}`);
+        }
+
+        function evaluatePassword() {
+            const pwd = document.getElementById('password-input').value;
+
+            const hasLength = pwd.length >= 14;
+            const hasUpperLower = /[a-z]/.test(pwd) && /[A-Z]/.test(pwd);
+            const numbersMatch = pwd.match(/[0-9]/g) || [];
+            const hasNumbers = numbersMatch.length >= 2 && !/(012|123|234|345|456|567|678|789)/.test(pwd);
+            const symbolsMatch = pwd.match(/[^a-zA-Z0-9\s]/g) || [];
+            const hasSymbols = symbolsMatch.length >= 2;
+            const commonPatterns = /(senha|password|1234|qwerty|admin|2024|2025|2026|brasil|futebol)/i;
+            const noCommon = pwd.length > 0 && !commonPatterns.test(pwd);
+
+            updateReqUI('req-length', hasLength);
+            updateReqUI('req-upper-lower', hasUpperLower);
+            updateReqUI('req-number', hasNumbers);
+            updateReqUI('req-symbol', hasSymbols);
+            updateReqUI('req-no-common', noCommon);
+
+            // Cálculo de pool de caracteres e entropia
+            let pool = 0;
+            if (/[a-z]/.test(pwd)) pool += 26;
+            if (/[A-Z]/.test(pwd)) pool += 26;
+            if (/[0-9]/.test(pwd)) pool += 10;
+            if (/[^a-zA-Z0-9]/.test(pwd)) pool += 32;
+
+            const entropy = pwd.length > 0 && pool > 0 ? Math.round(pwd.length * Math.log2(pool)) : 0;
+            document.getElementById('pwd-entropy').textContent = `${entropy} bits`;
+
+            // Pontuação percentual baseada nos critérios
+            let passedCount = [hasLength, hasUpperLower, hasNumbers, hasSymbols, noCommon].filter(Boolean).length;
+            let percent = pwd.length === 0 ? 0 : Math.min(100, Math.round((passedCount / 5) * 100));
+
+            const bar = document.getElementById('pwd-strength-bar');
+            const label = document.getElementById('pwd-strength-label');
+            const crackTime = document.getElementById('pwd-crack-time');
+            const submitBtn = document.getElementById('btn-submit-password');
+
+            bar.style.width = `${Math.max(5, percent)}%`;
+
+            if (percent < 40) {
+                bar.className = "h-full bg-rose-500 transition-all duration-300";
+                label.className = "font-bold text-rose-400";
+                label.textContent = `VULNERÁVEL (${percent}%)`;
+                crackTime.className = "font-display text-xl sm:text-2xl font-bold text-rose-400 mt-1";
+                crackTime.textContent = pwd.length < 6 ? "Instantâneo (< 1 seg)" : "Alguns minutos";
+            } else if (percent < 100) {
+                bar.className = "h-full bg-amber-400 transition-all duration-300";
+                label.className = "font-bold text-amber-400";
+                label.textContent = `MODERADA (${percent}%)`;
+                crackTime.className = "font-display text-xl sm:text-2xl font-bold text-amber-400 mt-1";
+                crackTime.textContent = "Alguns meses";
+            } else {
+                bar.className = "h-full bg-emerald-400 transition-all duration-300";
+                label.className = "font-bold text-emerald-400";
+                label.textContent = `IMPENETRÁVEL (100%)`;
+                crackTime.className = "font-display text-xl sm:text-2xl font-bold text-emerald-400 mt-1";
+                crackTime.textContent = "400+ Séculos";
+            }
+
+            submitBtn.disabled = (percent < 100);
+        }
+
+        function updateReqUI(elementId, passed) {
+            const el = document.getElementById(elementId);
+            const icon = el.querySelector('.status-icon');
+            if (passed) {
+                el.className = "p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/40 flex items-center gap-2.5 text-emerald-300 transition";
+                icon.textContent = "✓";
+            } else {
+                el.className = "p-3 rounded-lg bg-slate-900/70 border border-slate-800 flex items-center gap-2.5 text-slate-400 transition";
+                icon.textContent = "○";
+            }
+        }
+
+        function submitPasswordStage() {
+            addScore(2, 300);
+            updateHUD(2, 50);
+            showFeedback(
+                true,
+                "Chave Criptográfica Validada!",
+                "Excelente trabalho! Senhas longas (<em>passphrases</em>) com alta entropia tornam ataques de força bruta matematicamente inviáveis. Lembre-se de usar um <strong>Gerenciador de Senhas</strong> para não repetir senhas entre serviços e ativar sempre o <strong>MFA</strong>.",
+                "+300 PTS",
+                () => startStage3()
+            );
+        }
+
+        /* =========================================================================
+           MÓDULO 3: DEFESA DE REDE / FIREWALL (CANVAS MINIGAME)
+           ========================================================================= */
+        let fwState = {
+            running: false,
+            health: 100,
+            timeLeft: 25,
+            packets: [],
+            particles: [],
+            scoreEarned: 0,
+            spawnTimer: 0,
+            animFrame: null,
+            clockInterval: null
+        };
+
+        function startStage3() {
+            gameState.currentStage = 3;
+            updateHUD(3, 50);
+            showScreen('screen-stage-3');
+            document.getElementById('fw-start-overlay').classList.remove('hidden');
+            resizeFirewallCanvas();
+        }
+
+        function resizeFirewallCanvas() {
+            const container = document.getElementById('firewall-canvas-container');
+            const canvas = document.getElementById('firewall-canvas');
+            if (!container || !canvas) return;
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+        }
+
+        window.addEventListener('resize', () => {
+            if (gameState.currentStage === 3) {
+                resizeFirewallCanvas();
+            }
+        });
+
+        function startFirewallGame() {
+            playSound('click');
+            document.getElementById('fw-start-overlay').classList.add('hidden');
+            resizeFirewallCanvas();
+
+            fwState = {
+                running: true,
+                health: 100,
+                timeLeft: 25,
+                packets: [],
+                particles: [],
+                scoreEarned: 0,
+                spawnTimer: 0,
+                animFrame: null,
+                clockInterval: null
+            };
+
+            document.getElementById('fw-health').textContent = "100%";
+            document.getElementById('fw-timer').textContent = "25s";
+
+            const canvas = document.getElementById('firewall-canvas');
+            canvas.onpointerdown = handleFirewallClick;
+
+            fwState.clockInterval = setInterval(() => {
+                if (!fwState.running) return;
+                fwState.timeLeft--;
+                document.getElementById('fw-timer').textContent = `${fwState.timeLeft}s`;
+                if (fwState.timeLeft <= 0) {
+                    endFirewallGame();
+                }
+            }, 1000);
+
+            lastFrameTime = performance.now();
+            fwState.animFrame = requestAnimationFrame(firewallLoop);
+        }
+
+        function spawnPacket(canvasWidth, canvasHeight) {
+            const maliciousTypes = ["DDoS", "TROJAN", "SQLi", "XSS", "RANSOM"];
+            const safeTypes = ["HTTPS", "DNS-OK", "SSH-KEY", "TLS 1.3"];
+
+            const isMalicious = Math.random() < 0.62;
+            const label = isMalicious
+                ? maliciousTypes[Math.floor(Math.random() * maliciousTypes.length)]
+                : safeTypes[Math.floor(Math.random() * safeTypes.length)];
+
+            const radius = Math.max(24, Math.min(32, canvasWidth * 0.04));
+            const margin = radius + 12;
+            const y = margin + Math.random() * (canvasHeight - margin * 2);
+            const baseSpeed = (canvasWidth / 4.5) * (0.85 + Math.random() * 0.45);
+
+            fwState.packets.push({
+                x: -radius,
+                y: y,
+                radius: radius,
+                speed: baseSpeed,
+                isMalicious: isMalicious,
+                label: label
+            });
+        }
+
+        function createExplosion(x, y, color) {
+            for (let i = 0; i < 14; i++) {
+                const angle = (Math.PI * 2 * i) / 14;
+                const speed = 60 + Math.random() * 140;
+                fwState.particles.push({
+                    x, y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    life: 0.45,
+                    color
+                });
+            }
+        }
+
+        function handleFirewallClick(e) {
+            if (!fwState.running) return;
+            const canvas = document.getElementById('firewall-canvas');
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+
+            // Verifica de trás para frente (pacotes mais acima)
+            for (let i = fwState.packets.length - 1; i >= 0; i--) {
+                const p = fwState.packets[i];
+                const dist = Math.hypot(clickX - p.x, clickY - p.y);
+                // Margem generosa de toque (+12px) para facilitar em dispositivos móveis
+                if (dist <= p.radius + 12) {
+                    fwState.packets.splice(i, 1);
+                    if (p.isMalicious) {
+                        playSound('laser');
+                        fwState.scoreEarned += 25;
+                        createExplosion(p.x, p.y, '#ff2a55');
+                    } else {
+                        playSound('error');
+                        fwState.health = Math.max(0, fwState.health - 10);
+                        document.getElementById('fw-health').textContent = `${fwState.health}%`;
+                        createExplosion(p.x, p.y, '#ffcc00');
+                        showToast("⚠️ Falso Positivo! Você bloqueou tráfego legítimo!");
+                        if (fwState.health <= 0) endFirewallGame();
+                    }
+                    break;
+                }
+            }
+        }
+
+        let lastFrameTime = 0;
+        function firewallLoop(now) {
+            if (!fwState.running) return;
+            const dt = Math.min(0.05, (now - lastFrameTime) / 1000);
+            lastFrameTime = now;
+
+            const canvas = document.getElementById('firewall-canvas');
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width;
+            const H = canvas.height;
+
+            // Limpa fundo com grade digital
+            ctx.fillStyle = '#050911';
+            ctx.fillRect(0, 0, W, H);
+
+            ctx.strokeStyle = 'rgba(0, 229, 255, 0.06)';
+            ctx.lineWidth = 1;
+            for (let gx = 0; gx < W; gx += 40) {
+                ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke();
+            }
+            for (let gy = 0; gy < H; gy += 40) {
+                ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke();
+            }
+
+            // Zona do Núcleo do Servidor (Direita)
+            const coreX = W - 24;
+            const grad = ctx.createLinearGradient(W - 60, 0, W, 0);
+            grad.addColorStop(0, 'rgba(0, 255, 136, 0)');
+            grad.addColorStop(1, 'rgba(0, 255, 136, 0.25)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(W - 60, 0, 60, H);
+
+            ctx.strokeStyle = '#00ff88';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(coreX, 0);
+            ctx.lineTo(coreX, H);
+            ctx.stroke();
+
+            // Spawner de pacotes
+            fwState.spawnTimer -= dt;
+            if (fwState.spawnTimer <= 0) {
+                spawnPacket(W, H);
+                fwState.spawnTimer = 0.72;
+            }
+
+            // Atualiza e desenha pacotes
+            for (let i = fwState.packets.length - 1; i >= 0; i--) {
+                const p = fwState.packets[i];
+                p.x += p.speed * dt;
+
+                // Colisão com o núcleo
+                if (p.x + p.radius >= coreX) {
+                    fwState.packets.splice(i, 1);
+                    if (p.isMalicious) {
+                        playSound('error');
+                        fwState.health = Math.max(0, fwState.health - 20);
+                        document.getElementById('fw-health').textContent = `${fwState.health}%`;
+                        createExplosion(coreX, p.y, '#ff2a55');
+                        if (fwState.health <= 0) {
+                            endFirewallGame();
+                            return;
+                        }
+                    } else {
+                        fwState.scoreEarned += 10;
+                        createExplosion(coreX, p.y, '#00ff88');
+                    }
+                    continue;
+                }
+
+                // Desenho do pacote
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = p.isMalicious ? 'rgba(255, 42, 85, 0.2)' : 'rgba(0, 255, 136, 0.18)';
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = p.isMalicious ? '#ff2a55' : '#00ff88';
+                ctx.stroke();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 11px "Fira Code", monospace';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(p.label, p.x, p.y);
+                ctx.restore();
+            }
+
+            // Partículas de impacto
+            for (let i = fwState.particles.length - 1; i >= 0; i--) {
+                const pt = fwState.particles[i];
+                pt.x += pt.vx * dt;
+                pt.y += pt.vy * dt;
+                pt.life -= dt;
+                if (pt.life <= 0) {
+                    fwState.particles.splice(i, 1);
+                    continue;
+                }
+                ctx.globalAlpha = Math.max(0, pt.life * 2);
+                ctx.fillStyle = pt.color;
+                ctx.fillRect(pt.x - 2, pt.y - 2, 4, 4);
+                ctx.globalAlpha = 1;
+            }
+
+            fwState.animFrame = requestAnimationFrame(firewallLoop);
+        }
+
+        function endFirewallGame() {
+            fwState.running = false;
+            clearInterval(fwState.clockInterval);
+            cancelAnimationFrame(fwState.animFrame);
+
+            const earned = Math.min(300, Math.max(50, fwState.scoreEarned));
+            addScore(3, earned);
+            updateHUD(3, 75);
+
+            const survived = fwState.health > 0;
+            showFeedback(
+                survived,
+                survived ? "Perímetro Defendido com Sucesso!" : "Sobrecarga no Firewall!",
+                `Integridade final do servidor: <strong>${fwState.health}%</strong>.<br><br>Um bom <strong>Firewall de Próxima Geração (NGFW)</strong> inspeciona pacotes profundamente (DPI) para bloquear assinaturas de ataques como <em>SQL Injection</em> e <em>DDoS</em> sem interromper serviços legítimos essenciais ao negócio.`,
+                `+${earned} PTS`,
+                () => startStage4()
+            );
+        }
+
+        /* =========================================================================
+           MÓDULO 4: QUIZ RÁPIDO DE ENGENHARIA SOCIAL
+           ========================================================================= */
+        function startStage4() {
+            gameState.currentStage = 4;
+            updateHUD(4, 75);
+            showScreen('screen-stage-4');
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            const idx = gameState.quizIndex;
+            const item = socialEngQuizzes[idx];
+
+            document.getElementById('quiz-counter').textContent = `Cenário ${idx + 1} de ${socialEngQuizzes.length}`;
+            document.getElementById('quiz-tag').textContent = item.tag;
+            document.getElementById('quiz-question').textContent = item.question;
+
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+
+            item.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 hover:border-amber-400 text-sm text-slate-200 transition flex items-start gap-3 cursor-pointer";
+                btn.innerHTML = `
+                    <span class="px-2.5 py-0.5 rounded bg-slate-950 border border-slate-700 text-amber-400 font-bold text-xs shrink-0 mt-0.5">
+                        ${String.fromCharCode(65 + i)}
+                    </span>
+                    <span>${opt.text}</span>
+                `;
+                btn.onclick = () => answerQuiz(opt.correct, item.explanation);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function answerQuiz(isCorrect, explanation) {
+            if (isCorrect) {
+                addScore(4, 100);
+            }
+
+            showFeedback(
+                isCorrect,
+                isCorrect ? "Decisão Segura!" : "Vulnerabilidade Explorada!",
+                explanation,
+                isCorrect ? "+100 PTS" : "+0 PTS",
+                () => {
+                    gameState.quizIndex++;
+                    const progress = 75 + (gameState.quizIndex / socialEngQuizzes.length) * 25;
+                    updateHUD(4, progress);
+
+                    if (gameState.quizIndex < socialEngQuizzes.length) {
+                        renderQuizQuestion();
+                    } else {
+                        showFinalCertificate();
+                    }
+                }
+            );
+        }
+
+        /* =========================================================================
+           TELA FINAL: CERTIFICADO E RANKING
+           ========================================================================= */
+        function showFinalCertificate() {
+            playSound('success');
+            showScreen('screen-final');
+            updateHUD(4, 100);
+
+            const total = gameState.score;
+            const accuracy = Math.min(100, Math.round((total / gameState.maxPossibleScore) * 100));
+
+            let rank = "ANALISTA JÚNIOR DE SEGURANÇA";
+            if (accuracy >= 85) rank = "ARQUITETO(A) ELITE DE CIBERDEFESA";
+            else if (accuracy >= 65) rank = "ESPECIALISTA EM SEGURANÇA CIBERNÉTICA";
+            else if (accuracy >= 45) rank = "OPERADOR(A) DE RESPOSTA A INCIDENTES";
+
+            document.getElementById('cert-player-name').textContent = gameState.playerName.toUpperCase();
+            document.getElementById('cert-rank').textContent = rank;
+            document.getElementById('cert-total-score').textContent = `${total} PTS`;
+            document.getElementById('cert-accuracy').textContent = `${accuracy}%`;
+            document.getElementById('cert-hash').textContent = `#CG-${Math.floor(1000 + Math.random() * 9000)}`;
+
+            const breakdown = document.getElementById('cert-breakdown');
+            breakdown.innerHTML = `
+                <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 flex justify-between">
+                    <span class="text-slate-300">01. Detector de Phishing</span>
+                    <strong class="text-cyan-400">${gameState.stageScores[1]} / 400 pts</strong>
+                </div>
+                <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 flex justify-between">
+                    <span class="text-slate-300">02. Forja de Senhas</span>
+                    <strong class="text-emerald-400">${gameState.stageScores[2]} / 300 pts</strong>
+                </div>
+                <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 flex justify-between">
+                    <span class="text-slate-300">03. Defesa de Firewall</span>
+                    <strong class="text-purple-400">${gameState.stageScores[3]} / 300 pts</strong>
+                </div>
+                <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 flex justify-between">
+                    <span class="text-slate-300">04. Engenharia Social</span>
+                    <strong class="text-amber-400">${gameState.stageScores[4]} / 400 pts</strong>
+                </div>
+            `;
+        }
+
+        function copyCertificate() {
+            playSound('click');
+            const text = `🛡️ CERTIFICADO CYBERGUARD OS\nAgente: ${gameState.playerName}\nPatente: ${document.getElementById('cert-rank').textContent}\nPontuação: ${gameState.score} PTS (${document.getElementById('cert-accuracy').textContent})`;
+            const tempInput = document.createElement('textarea');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast("Credencial copiada para a área de transferência!");
+        }
+
+        function resetGame() {
+            playSound('click');
+            document.getElementById('hud-stats').classList.add('hidden');
+            document.getElementById('hud-score').textContent = '0000';
+            showScreen('screen-intro');
+        }
+    </script>
+</body>
+</html>
