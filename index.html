@@ -131,7 +131,7 @@
                     <h1 class="font-display font-bold text-lg sm:text-xl tracking-wider text-white">
                         CYBER<span class="text-emerald-400 glow-green">GUARD</span> <span class="text-xs text-cyan-400 font-mono">v4.2</span>
                     </h1>
-                    <p class="text-[11px] text-slate-400 hidden sm:block">PROTOCOLO DE TREINAMENTO DE DEFESA CIBERNÉTICA</p>
+                    <p data-i18n="headerSubtitle" class="text-[11px] text-slate-400 hidden sm:block">PROTOCOLO DE TREINAMENTO DE DEFESA CIBERNÉTICA</p>
                 </div>
             </div>
 
@@ -146,14 +146,21 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-3">
-                <button id="btn-sound" onclick="toggleAudio()" title="Alternar Áudio" class="p-2 rounded-lg bg-slate-800/80 border border-slate-700 text-cyan-400 hover:border-cyan-400 transition">
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Seletor de Idioma (PT / EN / ES) -->
+                <div class="flex items-center rounded-lg bg-slate-900 border border-slate-700 p-0.5 text-[11px] font-bold" role="group" aria-label="Language selector">
+                    <button id="lang-btn-pt" onclick="setLanguage('pt')" class="px-2 py-1 rounded-md bg-cyan-500 text-slate-950 transition cursor-pointer">PT</button>
+                    <button id="lang-btn-en" onclick="setLanguage('en')" class="px-2 py-1 rounded-md text-slate-400 hover:text-white transition cursor-pointer">EN</button>
+                    <button id="lang-btn-es" onclick="setLanguage('es')" class="px-2 py-1 rounded-md text-slate-400 hover:text-white transition cursor-pointer">ES</button>
+                </div>
+
+                <button id="btn-sound" onclick="toggleAudio()" title="Alternar Áudio" class="p-2 rounded-lg bg-slate-800/80 border border-slate-700 text-cyan-400 hover:border-cyan-400 transition cursor-pointer">
                     <svg id="icon-sound-on" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
                     <svg id="icon-sound-off" class="w-5 h-5 hidden text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path></svg>
                 </button>
-                <div class="px-4 py-1.5 rounded-lg bg-slate-900 border border-emerald-500/40 flex items-center gap-2">
+                <div class="px-3 sm:px-4 py-1.5 rounded-lg bg-slate-900 border border-emerald-500/40 flex items-center gap-2">
                     <span class="text-xs text-slate-400">SCORE:</span>
-                    <span id="hud-score" class="font-display font-bold text-lg text-emerald-400 glow-green">0000</span>
+                    <span id="hud-score" class="font-display font-bold text-base sm:text-lg text-emerald-400 glow-green">0000</span>
                 </div>
             </div>
         </div>
@@ -168,12 +175,12 @@
             <div class="space-y-4">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                    SISTEMA DE TREINAMENTO ONLINE
+                    <span data-i18n="introBadge">SISTEMA DE TREINAMENTO ONLINE</span>
                 </div>
-                <h2 class="font-display text-3xl sm:text-4xl font-black text-white leading-tight">
+                <h2 data-i18n-html="introTitle" class="font-display text-3xl sm:text-4xl font-black text-white leading-tight">
                     VOCÊ ESTÁ PRONTO PARA DEFENDER A <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">REDE GLOBAL?</span>
                 </h2>
-                <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-3xl">
+                <p data-i18n-html="introDesc" class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-3xl">
                     Bem-vindo(a), Recruta. Nossa infraestrutura está sob ataque constante. Você passará por <strong class="text-cyan-400">4 simulações críticas</strong> em tempo real para provar sua capacidade de neutralizar ameaças digitais e proteger dados confidenciais.
                 </p>
             </div>
@@ -183,29 +190,29 @@
                 <div class="p-4 rounded-xl bg-slate-900/85 border border-slate-800 hover:border-cyan-500/40 transition flex items-center gap-4">
                     <span class="text-cyan-400 font-display font-bold text-lg shrink-0">01</span>
                     <div>
-                        <div class="font-bold text-white">Detector de Phishing</div>
-                        <div class="text-slate-400 text-xs mt-0.5">Auditoria forense de e-mails</div>
+                        <div data-i18n="mod1Title" class="font-bold text-white">Detector de Phishing</div>
+                        <div data-i18n="mod1Sub" class="text-slate-400 text-xs mt-0.5">Auditoria forense de e-mails</div>
                     </div>
                 </div>
                 <div class="p-4 rounded-xl bg-slate-900/85 border border-slate-800 hover:border-emerald-500/40 transition flex items-center gap-4">
                     <span class="text-emerald-400 font-display font-bold text-lg shrink-0">02</span>
                     <div>
-                        <div class="font-bold text-white">Forja de Senhas</div>
-                        <div class="text-slate-400 text-xs mt-0.5">Resistência à força bruta</div>
+                        <div data-i18n="mod2Title" class="font-bold text-white">Forja de Senhas</div>
+                        <div data-i18n="mod2Sub" class="text-slate-400 text-xs mt-0.5">Resistência à força bruta</div>
                     </div>
                 </div>
                 <div class="p-4 rounded-xl bg-slate-900/85 border border-slate-800 hover:border-purple-500/40 transition flex items-center gap-4">
                     <span class="text-purple-400 font-display font-bold text-lg shrink-0">03</span>
                     <div>
-                        <div class="font-bold text-white">Defesa de Firewall</div>
-                        <div class="text-slate-400 text-xs mt-0.5">Filtragem de pacotes em tempo real</div>
+                        <div data-i18n="mod3Title" class="font-bold text-white">Defesa de Firewall</div>
+                        <div data-i18n="mod3Sub" class="text-slate-400 text-xs mt-0.5">Filtragem de pacotes em tempo real</div>
                     </div>
                 </div>
                 <div class="p-4 rounded-xl bg-slate-900/85 border border-slate-800 hover:border-amber-500/40 transition flex items-center gap-4">
                     <span class="text-amber-400 font-display font-bold text-lg shrink-0">04</span>
                     <div>
-                        <div class="font-bold text-white">Engenharia Social</div>
-                        <div class="text-slate-400 text-xs mt-0.5">Resposta rápida a incidentes</div>
+                        <div data-i18n="mod4Title" class="font-bold text-white">Engenharia Social</div>
+                        <div data-i18n="mod4Sub" class="text-slate-400 text-xs mt-0.5">Resposta rápida a incidentes</div>
                     </div>
                 </div>
             </div>
@@ -215,9 +222,9 @@
                 <!-- Formulário de Codinome & Aviso OPSEC -->
                 <div class="lg:col-span-7 flex flex-col justify-between space-y-4">
                     <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
-                        <input type="text" id="player-name-input" placeholder="Digite um codinome fictício..." maxlength="24"
+                        <input type="text" id="player-name-input" data-i18n-placeholder="codenamePlaceholder" placeholder="Digite um codinome fictício..." maxlength="24"
                             class="px-4 py-3.5 rounded-xl bg-slate-950 border border-cyan-500/40 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 flex-1 min-w-0 text-sm">
-                        <button onclick="startGame()" class="cyber-btn px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 font-display font-bold text-sm shadow-lg shrink-0 whitespace-nowrap cursor-pointer">
+                        <button data-i18n="startBtn" onclick="startGame()" class="cyber-btn px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 text-slate-950 font-display font-bold text-sm shadow-lg shrink-0 whitespace-nowrap cursor-pointer">
                             INICIAR MISSÃO &gt;_
                         </button>
                     </div>
@@ -227,7 +234,7 @@
                         <svg class="w-5 h-5 text-amber-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                         </svg>
-                        <p class="text-amber-200/90">
+                        <p data-i18n-html="opsecWarning" class="text-amber-200/90">
                             <strong class="text-amber-400">ALERTA OPSEC (PRIVACIDADE):</strong> Nunca exponha sua identidade real na rede. <strong class="text-white">NÃO digite seu nome verdadeiro nem seu apelido pessoal</strong>; utilize apenas um codinome fictício.
                         </p>
                     </div>
@@ -243,11 +250,11 @@
                     </div>
                     <div class="space-y-1.5 text-[11px] leading-relaxed">
                         <p class="text-slate-400">$ ./init_defense_matrix.sh</p>
-                        <p>[OK] Carregando heurística anti-phishing...</p>
-                        <p>[OK] Módulos de entropia criptográfica ativos.</p>
-                        <p>[OK] Regras de pacote TCP/UDP prontas.</p>
-                        <p class="text-amber-400">[ALERTA] 14 tentativas de intrusão detectadas na última hora.</p>
-                        <p class="text-cyan-400 animate-pulse">&gt; Aguardando autenticação do operador...</p>
+                        <p data-i18n="termLine1">[OK] Carregando heurística anti-phishing...</p>
+                        <p data-i18n="termLine2">[OK] Módulos de entropia criptográfica ativos.</p>
+                        <p data-i18n="termLine3">[OK] Regras de pacote TCP/UDP prontas.</p>
+                        <p data-i18n="termLine4" class="text-amber-400">[ALERTA] 14 tentativas de intrusão detectadas na última hora.</p>
+                        <p data-i18n="termLine5" class="text-cyan-400 animate-pulse">&gt; Aguardando autenticação do operador...</p>
                     </div>
                 </div>
             </div>
@@ -257,15 +264,15 @@
         <section id="screen-stage-1" class="hidden space-y-5">
             <div class="flex flex-wrap items-center justify-between gap-2">
                 <div>
-                    <span class="text-xs text-cyan-400 font-bold tracking-widest uppercase">Módulo 01 // Análise Forense</span>
-                    <h2 class="font-display text-2xl font-bold text-white">DETECTOR DE PHISHING</h2>
+                    <span data-i18n="s1Tag" class="text-xs text-cyan-400 font-bold tracking-widest uppercase">Módulo 01 // Análise Forense</span>
+                    <h2 data-i18n="s1Heading" class="font-display text-2xl font-bold text-white">DETECTOR DE PHISHING</h2>
                 </div>
                 <span id="phishing-counter" class="px-3 py-1 rounded-lg bg-slate-900 border border-cyan-500/30 text-xs text-cyan-300">
                     E-mail 1 de 4
                 </span>
             </div>
 
-            <p class="text-sm text-slate-300">
+            <p data-i18n-html="s1Desc" class="text-sm text-slate-300">
                 Inspecione cuidadosamente o remetente, o domínio do link (passe o mouse ou toque no botão de link) e o tom da mensagem. Determine se o e-mail é <strong class="text-emerald-400">LEGÍTIMO</strong> ou <strong class="text-rose-400">PHISHING</strong>.
             </p>
 
@@ -275,14 +282,14 @@
                 <div class="bg-slate-900/90 px-5 py-4 border-b border-slate-800 space-y-2">
                     <div class="flex flex-wrap justify-between items-start gap-2">
                         <div>
-                            <span class="text-xs text-slate-400">De:</span>
+                            <span data-i18n="emailFrom" class="text-xs text-slate-400">De:</span>
                             <span id="email-sender-name" class="font-bold text-white text-sm ml-1">Suporte TI</span>
                             <span id="email-sender-addr" class="text-xs text-cyan-400 bg-slate-950 px-2 py-0.5 rounded border border-slate-800 ml-1">&lt;suporte@empresa.com&gt;</span>
                         </div>
                         <span id="email-date" class="text-xs text-slate-500">Hoje, 09:14</span>
                     </div>
                     <div>
-                        <span class="text-xs text-slate-400">Assunto:</span>
+                        <span data-i18n="emailSubject" class="text-xs text-slate-400">Assunto:</span>
                         <span id="email-subject" class="font-bold text-amber-300 text-sm ml-1">Assunto do e-mail</span>
                     </div>
                 </div>
@@ -298,7 +305,7 @@
                             Verificar Link
                         </button>
                         <div class="p-3 rounded-lg bg-slate-900 border border-slate-800 text-xs flex flex-wrap items-center gap-2">
-                            <span class="text-slate-400">URL de destino detectada:</span>
+                            <span data-i18n="emailDestUrl" class="text-slate-400">URL de destino detectada:</span>
                             <code id="email-real-url" class="text-amber-300 break-all font-mono">https://...</code>
                         </div>
                     </div>
@@ -308,11 +315,11 @@
                 <div id="phishing-actions" class="p-4 bg-slate-900 border-t border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <button onclick="answerPhishing(false)" class="cyber-btn py-3.5 px-6 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500 text-emerald-400 font-bold flex items-center justify-center gap-2 cursor-pointer">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        E-MAIL LEGÍTIMO (SEGURO)
+                        <span data-i18n="btnLegit">E-MAIL LEGÍTIMO (SEGURO)</span>
                     </button>
                     <button onclick="answerPhishing(true)" class="cyber-btn py-3.5 px-6 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500 text-rose-400 font-bold flex items-center justify-center gap-2 cursor-pointer">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                        REPORTAR PHISHING (AMEAÇA)
+                        <span data-i18n="btnPhishing">REPORTAR PHISHING (AMEAÇA)</span>
                     </button>
                 </div>
             </div>
@@ -321,23 +328,23 @@
         <!-- MÓDULO 2: CRIADOR DE SENHAS FORTES -->
         <section id="screen-stage-2" class="hidden space-y-5">
             <div>
-                <span class="text-xs text-emerald-400 font-bold tracking-widest uppercase">Módulo 02 // Criptografia & Autenticação</span>
-                <h2 class="font-display text-2xl font-bold text-white">FORJA DE SENHA ANTI-BRUTE FORCE</h2>
+                <span data-i18n="s2Tag" class="text-xs text-emerald-400 font-bold tracking-widest uppercase">Módulo 02 // Criptografia & Autenticação</span>
+                <h2 data-i18n="s2Heading" class="font-display text-2xl font-bold text-white">FORJA DE SENHA ANTI-BRUTE FORCE</h2>
             </div>
 
-            <p class="text-sm text-slate-300">
+            <p data-i18n-html="s2Desc" class="text-sm text-slate-300">
                 Supercomputadores modernos podem testar bilhões de combinações por segundo. Crie uma senha mestre que atinja <strong class="text-emerald-400">100% de segurança</strong> e resista por séculos contra ataques de força bruta e dicionário.
             </p>
 
             <div class="cyber-panel rounded-2xl p-6 space-y-6">
                 <!-- Campo de Senha -->
                 <div class="space-y-2">
-                    <label class="text-xs text-cyan-400 uppercase tracking-wider">Digite sua senha de alta entropia:</label>
+                    <label data-i18n="pwdLabel" class="text-xs text-cyan-400 uppercase tracking-wider">Digite sua senha de alta entropia:</label>
                     <div class="relative flex items-center">
                         <input type="text" id="password-input" oninput="evaluatePassword()" autocomplete="off"
-                            placeholder="Ex: C@fe-Quente#2026!Nave"
+                            data-i18n-placeholder="pwdPlaceholder" placeholder="Ex: C@fe-Quente#2026!Nave"
                             class="w-full px-4 py-4 rounded-xl bg-slate-950 border-2 border-slate-700 focus:border-cyan-400 text-lg sm:text-xl font-mono text-white focus:outline-none pr-24">
-                        <button onclick="generatePassphraseHint()" class="absolute right-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-cyan-300 border border-slate-600 cursor-pointer">
+                        <button data-i18n="pwdHintBtn" onclick="generatePassphraseHint()" class="absolute right-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-cyan-300 border border-slate-600 cursor-pointer">
                             Dica 💡
                         </button>
                     </div>
@@ -347,17 +354,17 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
                         <div class="flex justify-between text-xs">
-                            <span class="text-slate-400">FORÇA CRIPTOGRÁFICA</span>
+                            <span data-i18n="pwdStrengthTitle" class="text-slate-400">FORÇA CRIPTOGRÁFICA</span>
                             <span id="pwd-strength-label" class="font-bold text-rose-400">MUITO FRACA (0%)</span>
                         </div>
                         <div class="w-full h-3 bg-slate-900 rounded-full overflow-hidden">
                             <div id="pwd-strength-bar" class="h-full bg-rose-500 transition-all duration-300" style="width: 5%"></div>
                         </div>
-                        <p class="text-[11px] text-slate-500">Entropia estimada: <span id="pwd-entropy" class="text-slate-300">0 bits</span></p>
+                        <p class="text-[11px] text-slate-500"><span data-i18n="pwdEntropyLabel">Entropia estimada:</span> <span id="pwd-entropy" class="text-slate-300">0 bits</span></p>
                     </div>
 
                     <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 flex flex-col justify-center">
-                        <span class="text-xs text-slate-400">TEMPO PARA QUEBRA (GPU CLUSTER):</span>
+                        <span data-i18n="pwdCrackTitle" class="text-xs text-slate-400">TEMPO PARA QUEBRA (GPU CLUSTER):</span>
                         <span id="pwd-crack-time" class="font-display text-xl sm:text-2xl font-bold text-rose-400 mt-1">Instantâneo</span>
                     </div>
                 </div>
@@ -365,24 +372,24 @@
                 <!-- Checklist de Requisitos -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                     <div id="req-length" class="p-3 rounded-lg bg-slate-900/70 border border-slate-800 flex items-center gap-2.5 text-slate-400">
-                        <span class="status-icon">○</span> Mínimo de 14 caracteres (comprimento é rei)
+                        <span class="status-icon">○</span> <span class="req-text">Mínimo de 14 caracteres (comprimento é rei)</span>
                     </div>
                     <div id="req-upper-lower" class="p-3 rounded-lg bg-slate-900/70 border border-slate-800 flex items-center gap-2.5 text-slate-400">
-                        <span class="status-icon">○</span> Letras MAIÚSCULAS e minúsculas
+                        <span class="status-icon">○</span> <span class="req-text">Letras MAIÚSCULAS e minúsculas</span>
                     </div>
                     <div id="req-number" class="p-3 rounded-lg bg-slate-900/70 border border-slate-800 flex items-center gap-2.5 text-slate-400">
-                        <span class="status-icon">○</span> Pelo menos 2 números não sequenciais
+                        <span class="status-icon">○</span> <span class="req-text">Pelo menos 2 números não sequenciais</span>
                     </div>
                     <div id="req-symbol" class="p-3 rounded-lg bg-slate-900/70 border border-slate-800 flex items-center gap-2.5 text-slate-400">
-                        <span class="status-icon">○</span> Pelo menos 2 símbolos especiais (!@#$%&*)
+                        <span class="status-icon">○</span> <span class="req-text">Pelo menos 2 símbolos especiais (!@#$%&*)</span>
                     </div>
                     <div id="req-no-common" class="sm:col-span-2 p-3 rounded-lg bg-slate-900/70 border border-slate-800 flex items-center gap-2.5 text-slate-400">
-                        <span class="status-icon">○</span> Sem padrões óbvios (1234, qwerty, senha, admin, 2025/2026)
+                        <span class="status-icon">○</span> <span class="req-text">Sem padrões óbvios (1234, qwerty, senha, admin, 2025/2026)</span>
                     </div>
                 </div>
 
                 <div class="flex justify-end pt-2">
-                    <button id="btn-submit-password" onclick="submitPasswordStage()" disabled
+                    <button id="btn-submit-password" data-i18n="pwdSubmitBtn" onclick="submitPasswordStage()" disabled
                         class="cyber-btn px-8 py-3.5 rounded-xl bg-emerald-500 disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed text-slate-950 font-display font-bold text-sm cursor-pointer">
                         VALIDAR CHAVE DE ACESSO
                     </button>
@@ -394,15 +401,15 @@
         <section id="screen-stage-3" class="hidden space-y-4">
             <div class="flex flex-wrap items-center justify-between gap-2">
                 <div>
-                    <span class="text-xs text-purple-400 font-bold tracking-widest uppercase">Módulo 03 // Segurança de Perímetro</span>
-                    <h2 class="font-display text-2xl font-bold text-white">FIREWALL INTERCEPTOR</h2>
+                    <span data-i18n="s3Tag" class="text-xs text-purple-400 font-bold tracking-widest uppercase">Módulo 03 // Segurança de Perímetro</span>
+                    <h2 data-i18n="s3Heading" class="font-display text-2xl font-bold text-white">FIREWALL INTERCEPTOR</h2>
                 </div>
                 <div class="flex items-center gap-3 text-xs">
                     <div class="px-3 py-1.5 rounded-lg bg-slate-900 border border-emerald-500/40 text-emerald-400">
-                        Integridade do Servidor: <strong id="fw-health">100%</strong>
+                        <span data-i18n="fwHealthLabel">Integridade do Servidor:</span> <strong id="fw-health">100%</strong>
                     </div>
                     <div class="px-3 py-1.5 rounded-lg bg-slate-900 border border-cyan-500/40 text-cyan-400">
-                        Tempo: <strong id="fw-timer">30s</strong>
+                        <span data-i18n="fwTimerLabel">Tempo:</span> <strong id="fw-timer">25s</strong>
                     </div>
                 </div>
             </div>
@@ -410,12 +417,12 @@
             <div class="cyber-panel rounded-2xl p-4 space-y-3">
                 <div class="flex flex-wrap items-center justify-between gap-2 text-xs bg-slate-950 p-3 rounded-xl border border-slate-800">
                     <div class="flex items-center gap-2">
-                        <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
-                        <span class="text-rose-300"><strong>CLIQUE / TOQUE</strong> nos pacotes maliciosos (<code class="text-rose-400">MALWARE, DDoS, SQLi, TROJAN</code>) para bloqueá-los!</span>
+                        <span class="w-3 h-3 rounded-full bg-rose-500 inline-block shrink-0"></span>
+                        <span data-i18n-html="fwRuleMalicious" class="text-rose-300"><strong>CLIQUE / TOQUE</strong> nos pacotes maliciosos (<code class="text-rose-400">MALWARE, DDoS, SQLi, TROJAN</code>) para bloqueá-los!</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span>
-                        <span class="text-emerald-300"><strong>DEIXE PASSAR</strong> o tráfego legítimo (<code class="text-emerald-400">HTTPS, DNS, SSH-OK</code>).</span>
+                        <span class="w-3 h-3 rounded-full bg-emerald-400 inline-block shrink-0"></span>
+                        <span data-i18n-html="fwRuleSafe" class="text-emerald-300"><strong>DEIXE PASSAR</strong> o tráfego legítimo (<code class="text-emerald-400">HTTPS, DNS, SSH-OK</code>).</span>
                     </div>
                 </div>
 
@@ -428,11 +435,11 @@
                         <div class="w-14 h-14 rounded-full bg-purple-500/20 border border-purple-400 flex items-center justify-center text-purple-400">
                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                         </div>
-                        <h3 class="font-display text-xl font-bold text-white">TRÁFEGO DE REDE INCOMING</h3>
-                        <p class="text-xs sm:text-sm text-slate-300 max-w-md">
+                        <h3 data-i18n="fwOverlayTitle" class="font-display text-xl font-bold text-white">TRÁFEGO DE REDE INCOMING</h3>
+                        <p data-i18n="fwOverlayDesc" class="text-xs sm:text-sm text-slate-300 max-w-md">
                             Pacotes estão cruzando a rede da esquerda para o núcleo do servidor à direita. Destrua as ameaças vermelhas antes que atinjam o núcleo e não bloqueie os pacotes verdes legítimos!
                         </p>
-                        <button onclick="startFirewallGame()" class="cyber-btn px-6 py-3 rounded-xl bg-purple-500 hover:bg-purple-400 text-white font-display font-bold text-sm cursor-pointer">
+                        <button data-i18n="fwStartBtn" onclick="startFirewallGame()" class="cyber-btn px-6 py-3 rounded-xl bg-purple-500 hover:bg-purple-400 text-white font-display font-bold text-sm cursor-pointer">
                             ATIVAR FIREWALL AGORA
                         </button>
                     </div>
@@ -444,8 +451,8 @@
         <section id="screen-stage-4" class="hidden space-y-5">
             <div class="flex flex-wrap items-center justify-between gap-2">
                 <div>
-                    <span class="text-xs text-amber-400 font-bold tracking-widest uppercase">Módulo 04 // Fator Humano</span>
-                    <h2 class="font-display text-2xl font-bold text-white">DEFESA CONTRA ENGENHARIA SOCIAL</h2>
+                    <span data-i18n="s4Tag" class="text-xs text-amber-400 font-bold tracking-widest uppercase">Módulo 04 // Fator Humano</span>
+                    <h2 data-i18n="s4Heading" class="font-display text-2xl font-bold text-white">DEFESA CONTRA ENGENHARIA SOCIAL</h2>
                 </div>
                 <span id="quiz-counter" class="px-3 py-1 rounded-lg bg-slate-900 border border-amber-500/30 text-xs text-amber-300">
                     Cenário 1 de 4
@@ -474,39 +481,39 @@
                 </div>
 
                 <div class="text-center space-y-3 max-w-2xl mx-auto">
-                    <span class="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 text-xs font-bold tracking-widest">
+                    <span data-i18n="certBadge" class="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-300 text-xs font-bold tracking-widest">
                         CERTIFICAÇÃO OFICIAL CYBERGUARD
                     </span>
-                    <h2 class="font-display text-2xl sm:text-4xl font-black text-white">
+                    <h2 data-i18n="certTitle" class="font-display text-2xl sm:text-4xl font-black text-white">
                         TREINAMENTO CONCLUÍDO
                     </h2>
-                    <p class="text-slate-400 text-xs sm:text-sm">
+                    <p data-i18n="certSubtitle" class="text-slate-400 text-xs sm:text-sm">
                         Este documento certifica que o operador abaixo completou todas as simulações de defesa cibernética.
                     </p>
                 </div>
 
                 <!-- Cartão de Certificado -->
                 <div class="my-8 p-6 rounded-xl bg-slate-950/90 border border-cyan-500/40 text-center space-y-4">
-                    <div class="text-xs text-slate-400 uppercase tracking-widest">AGENTE CERTIFICADO</div>
+                    <div data-i18n="certAgentLabel" class="text-xs text-slate-400 uppercase tracking-widest">AGENTE CERTIFICADO</div>
                     <div id="cert-player-name" class="font-display text-2xl sm:text-3xl font-bold text-cyan-400 glow-cyan">
                         AGENTE ANÔNIMO
                     </div>
                     <div class="inline-block px-4 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/40">
-                        <span class="text-xs text-slate-300">PATENTE ALCANÇADA: </span>
+                        <span data-i18n="certRankLabel" class="text-xs text-slate-300">PATENTE ALCANÇADA: </span>
                         <strong id="cert-rank" class="text-emerald-400 font-display tracking-wide">ESPECIALISTA CIBER-DEFENSOR</strong>
                     </div>
 
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-slate-800 text-xs">
                         <div class="p-2.5 rounded-lg bg-slate-900">
-                            <div class="text-slate-400">PONTUAÇÃO TOTAL</div>
+                            <div data-i18n="certScoreLabel" class="text-slate-400">PONTUAÇÃO TOTAL</div>
                             <div id="cert-total-score" class="font-display text-lg font-bold text-emerald-400">0</div>
                         </div>
                         <div class="p-2.5 rounded-lg bg-slate-900">
-                            <div class="text-slate-400">PRECISÃO</div>
+                            <div data-i18n="certAccuracyLabel" class="text-slate-400">PRECISÃO</div>
                             <div id="cert-accuracy" class="font-display text-lg font-bold text-cyan-400">100%</div>
                         </div>
                         <div class="p-2.5 rounded-lg bg-slate-900">
-                            <div class="text-slate-400">MÓDULOS</div>
+                            <div data-i18n="certModulesLabel" class="text-slate-400">MÓDULOS</div>
                             <div class="font-display text-lg font-bold text-white">4 / 4</div>
                         </div>
                         <div class="p-2.5 rounded-lg bg-slate-900">
@@ -518,15 +525,15 @@
 
                 <!-- Resumo de Desempenho por Módulo -->
                 <div class="space-y-2 mb-6">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">RELATÓRIO DE TELEMETRIA POR MÓDULO:</h3>
+                    <h3 data-i18n="certTelemetryTitle" class="text-xs font-bold uppercase tracking-wider text-slate-400">RELATÓRIO DE TELEMETRIA POR MÓDULO:</h3>
                     <div id="cert-breakdown" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs"></div>
                 </div>
 
                 <div class="flex flex-wrap justify-center gap-4">
-                    <button onclick="copyCertificate()" class="cyber-btn px-6 py-3 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400 text-cyan-300 font-bold text-xs sm:text-sm cursor-pointer">
+                    <button data-i18n="certCopyBtn" onclick="copyCertificate()" class="cyber-btn px-6 py-3 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400 text-cyan-300 font-bold text-xs sm:text-sm cursor-pointer">
                         COPIAR CREDENCIAL 📋
                     </button>
-                    <button onclick="resetGame()" class="cyber-btn px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-display font-bold text-xs sm:text-sm cursor-pointer">
+                    <button data-i18n="certRestartBtn" onclick="resetGame()" class="cyber-btn px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-display font-bold text-xs sm:text-sm cursor-pointer">
                         REINICIAR SIMULAÇÃO ↻
                     </button>
                 </div>
@@ -551,7 +558,7 @@
 
             <div class="flex items-center justify-between pt-2">
                 <span id="feedback-points" class="font-display font-bold text-sm text-emerald-400">+100 PTS</span>
-                <button id="feedback-next-btn" onclick="closeFeedbackModal()" class="cyber-btn px-6 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-display font-bold text-xs sm:text-sm cursor-pointer">
+                <button id="feedback-next-btn" data-i18n="modalNextBtn" onclick="closeFeedbackModal()" class="cyber-btn px-6 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-display font-bold text-xs sm:text-sm cursor-pointer">
                     CONTINUAR &gt;&gt;
                 </button>
             </div>
@@ -562,11 +569,717 @@
     <div id="toast-msg" class="fixed bottom-5 right-5 z-50 hidden px-4 py-3 rounded-xl bg-slate-900 border border-cyan-400 text-cyan-300 text-xs shadow-2xl">
     </div>
 
-    <footer class="text-center py-4 text-[11px] text-slate-500 border-t border-slate-900">
+    <footer data-i18n="footerText" class="text-center py-4 text-[11px] text-slate-500 border-t border-slate-900">
         CYBERGUARD OS // SIMULADOR EDUCACIONAL DE SEGURANÇA DA INFORMAÇÃO
     </footer>
 
     <script>
+        /* =========================================================================
+           DICIONÁRIO DE INTERNACIONALIZAÇÃO (PT / EN / ES)
+           ========================================================================= */
+        let currentLang = 'pt';
+
+        const i18nData = {
+            pt: {
+                pageTitle: "CyberGuard OS // Simulador de Defesa Cibernética",
+                headerSubtitle: "PROTOCOLO DE TREINAMENTO DE DEFESA CIBERNÉTICA",
+                hudModule: "MÓDULO",
+                hudCompleted: "CONCLUÍDO",
+                soundOn: "Áudio do terminal ativado.",
+                soundOff: "Áudio silenciado.",
+                introBadge: "SISTEMA DE TREINAMENTO ONLINE",
+                introTitle: 'VOCÊ ESTÁ PRONTO PARA DEFENDER A <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">REDE GLOBAL?</span>',
+                introDesc: 'Bem-vindo(a), Recruta. Nossa infraestrutura está sob ataque constante. Você passará por <strong class="text-cyan-400">4 simulações críticas</strong> em tempo real para provar sua capacidade de neutralizar ameaças digitais e proteger dados confidenciais.',
+                mod1Title: "Detector de Phishing",
+                mod1Sub: "Auditoria forense de e-mails",
+                mod2Title: "Forja de Senhas",
+                mod2Sub: "Resistência à força bruta",
+                mod3Title: "Defesa de Firewall",
+                mod3Sub: "Filtragem de pacotes em tempo real",
+                mod4Title: "Engenharia Social",
+                mod4Sub: "Resposta rápida a incidentes",
+                codenamePlaceholder: "Digite um codinome fictício...",
+                startBtn: "INICIAR MISSÃO >_",
+                opsecWarning: '<strong class="text-amber-400">ALERTA OPSEC (PRIVACIDADE):</strong> Nunca exponha sua identidade real na rede. <strong class="text-white">NÃO digite seu nome verdadeiro nem seu apelido pessoal</strong>; utilize apenas um codinome fictício.',
+                termLine1: "[OK] Carregando heurística anti-phishing...",
+                termLine2: "[OK] Módulos de entropia criptográfica ativos.",
+                termLine3: "[OK] Regras de pacote TCP/UDP prontas.",
+                termLine4: "[ALERTA] 14 tentativas de intrusão detectadas na última hora.",
+                termLine5: "> Aguardando autenticação do operador...",
+                s1Tag: "Módulo 01 // Análise Forense",
+                s1Heading: "DETECTOR DE PHISHING",
+                s1Counter: (i, t) => `E-mail ${i} de ${t}`,
+                s1Desc: 'Inspecione cuidadosamente o remetente, o domínio do link (passe o mouse ou toque no botão de link) e o tom da mensagem. Determine se o e-mail é <strong class="text-emerald-400">LEGÍTIMO</strong> ou <strong class="text-rose-400">PHISHING</strong>.',
+                emailFrom: "De:",
+                emailSubject: "Assunto:",
+                emailDestUrl: "URL de destino detectada:",
+                btnLegit: "E-MAIL LEGÍTIMO (SEGURO)",
+                btnPhishing: "REPORTAR PHISHING (AMEAÇA)",
+                urlInspectToast: "Inspeção de URL: Verifique sempre o domínio principal antes da primeira barra '/'!",
+                phishingWinTitle: "Análise Forense Precisa!",
+                phishingLoseTitle: "Alerta de Comprometimento!",
+                s2Tag: "Módulo 02 // Criptografia & Autenticação",
+                s2Heading: "FORJA DE SENHA ANTI-BRUTE FORCE",
+                s2Desc: 'Supercomputadores modernos podem testar bilhões de combinações por segundo. Crie uma senha mestre que atinja <strong class="text-emerald-400">100% de segurança</strong> e resista por séculos contra ataques de força bruta e dicionário.',
+                pwdLabel: "Digite sua senha de alta entropia:",
+                pwdPlaceholder: "Ex: C@fe-Quente#2026!Nave",
+                pwdHintBtn: "Dica 💡",
+                pwdHintToast: (sample) => `Dica de Passphrase: Combine palavras aleatórias + símbolos e números. Ex: ${sample}`,
+                pwdStrengthTitle: "FORÇA CRIPTOGRÁFICA",
+                pwdEntropyLabel: "Entropia estimada:",
+                pwdCrackTitle: "TEMPO PARA QUEBRA (GPU CLUSTER):",
+                pwdVuln: (p) => `VULNERÁVEL (${p}%)`,
+                pwdMod: (p) => `MODERADA (${p}%)`,
+                pwdStrong: "IMPENETRÁVEL (100%)",
+                pwdInstant: "Instantâneo (< 1 seg)",
+                pwdMinutes: "Alguns minutos",
+                pwdMonths: "Alguns meses",
+                pwdCenturies: "400+ Séculos",
+                reqLength: "Mínimo de 14 caracteres (comprimento é rei)",
+                reqUpperLower: "Letras MAIÚSCULAS e minúsculas",
+                reqNumber: "Pelo menos 2 números não sequenciais",
+                reqSymbol: "Pelo menos 2 símbolos especiais (!@#$%&*)",
+                reqNoCommon: "Sem padrões óbvios (1234, qwerty, senha, admin, 2025/2026)",
+                pwdSubmitBtn: "VALIDAR CHAVE DE ACESSO",
+                pwdWinTitle: "Chave Criptográfica Validada!",
+                pwdWinBody: "Excelente trabalho! Senhas longas (<em>passphrases</em>) com alta entropia tornam ataques de força bruta matematicamente inviáveis. Lembre-se de usar um <strong>Gerenciador de Senhas</strong> para não repetir senhas entre serviços e ativar sempre o <strong>MFA</strong>.",
+                s3Tag: "Módulo 03 // Segurança de Perímetro",
+                s3Heading: "FIREWALL INTERCEPTOR",
+                fwHealthLabel: "Integridade do Servidor:",
+                fwTimerLabel: "Tempo:",
+                fwRuleMalicious: '<strong>CLIQUE / TOQUE</strong> nos pacotes maliciosos (<code class="text-rose-400">MALWARE, DDoS, SQLi, TROJAN</code>) para bloqueá-los!',
+                fwRuleSafe: '<strong>DEIXE PASSAR</strong> o tráfego legítimo (<code class="text-emerald-400">HTTPS, DNS, SSH-OK</code>).',
+                fwOverlayTitle: "TRÁFEGO DE REDE INCOMING",
+                fwOverlayDesc: "Pacotes estão cruzando a rede da esquerda para o núcleo do servidor à direita. Destrua as ameaças vermelhas antes que atinjam o núcleo e não bloqueie os pacotes verdes legítimos!",
+                fwStartBtn: "ATIVAR FIREWALL AGORA",
+                fwFalsePositive: "⚠️ Falso Positivo! Você bloqueou tráfego legítimo!",
+                fwWinTitle: "Perímetro Defendido com Sucesso!",
+                fwLoseTitle: "Sobrecarga no Firewall!",
+                fwEndBody: (h) => `Integridade final do servidor: <strong>${h}%</strong>.<br><br>Um bom <strong>Firewall de Próxima Geração (NGFW)</strong> inspeciona pacotes profundamente (DPI) para bloquear assinaturas de ataques como <em>SQL Injection</em> e <em>DDoS</em> sem interromper serviços legítimos essenciais ao negócio.`,
+                s4Tag: "Módulo 04 // Fator Humano",
+                s4Heading: "DEFESA CONTRA ENGENHARIA SOCIAL",
+                s4Counter: (i, t) => `Cenário ${i} de ${t}`,
+                quizWinTitle: "Decisão Segura!",
+                quizLoseTitle: "Vulnerabilidade Explorada!",
+                certBadge: "CERTIFICAÇÃO OFICIAL CYBERGUARD",
+                certTitle: "TREINAMENTO CONCLUÍDO",
+                certSubtitle: "Este documento certifica que o operador abaixo completou todas as simulações de defesa cibernética.",
+                certAgentLabel: "AGENTE CERTIFICADO",
+                defaultAgentName: "Agente CyberGuard",
+                certRankLabel: "PATENTE ALCANÇADA: ",
+                rankElite: "ARQUITETO(A) ELITE DE CIBERDEFESA",
+                rankSpec: "ESPECIALISTA EM SEGURANÇA CIBERNÉTICA",
+                rankOp: "OPERADOR(A) DE RESPOSTA A INCIDENTES",
+                rankJr: "ANALISTA JÚNIOR DE SEGURANÇA",
+                certScoreLabel: "PONTUAÇÃO TOTAL",
+                certAccuracyLabel: "PRECISÃO",
+                certModulesLabel: "MÓDULOS",
+                certTelemetryTitle: "RELATÓRIO DE TELEMETRIA POR MÓDULO:",
+                certBreak1: "01. Detector de Phishing",
+                certBreak2: "02. Forja de Senhas",
+                certBreak3: "03. Defesa de Firewall",
+                certBreak4: "04. Engenharia Social",
+                certCopyBtn: "COPIAR CREDENCIAL 📋",
+                certRestartBtn: "REINICIAR SIMULAÇÃO ↻",
+                certCopyText: (name, rank, score, acc) => `🛡️ CERTIFICADO CYBERGUARD OS\nAgente: ${name}\nPatente: ${rank}\nPontuação: ${score} PTS (${acc})`,
+                certCopiedToast: "Credencial copiada para a área de transferência!",
+                modalBadgeOk: "AMEAÇA NEUTRALIZADA / AÇÃO CORRETA",
+                modalBadgeFail: "FALHA DE SEGURANÇA DETECTADA",
+                modalNextBtn: "CONTINUAR >>",
+                footerText: "CYBERGUARD OS // SIMULADOR EDUCACIONAL DE SEGURANÇA DA INFORMAÇÃO",
+                phishingEmails: [
+                    {
+                        senderName: "Segurança Banco Bradesco",
+                        senderAddr: "alertas@bradesco-seguranca-atualiza.com.br",
+                        date: "Hoje, 08:42",
+                        subject: "URGENTE: Sua conta será bloqueada em 2 horas!",
+                        body: [
+                            "Prezado(a) Cliente,",
+                            "Detectamos um acesso não autorizado vindo de um dispositivo desconhecido em sua conta corrente.",
+                            "Para evitar o bloqueio permanente e multa contratual, confirme sua chave de segurança e senha imediatamente no link abaixo."
+                        ],
+                        ctaText: "Desbloquear Conta Agora",
+                        realUrl: "http://bradesco-seguranca-atualiza.com.br/login-token",
+                        isPhishing: true,
+                        explanation: "<strong>3 Sinais Clássicos de Phishing:</strong><br>1. <b>Domínio falso:</b> O domínio oficial é <code>bradesco.com.br</code>, não <code>bradesco-seguranca-atualiza.com.br</code>.<br>2. <b>Senso de urgência artificial:</b> Ameaça de bloqueio em 2 horas para induzir pânico.<br>3. <b>Protocolo HTTP inseguro:</b> Sites bancários nunca pedem senha por link de e-mail."
+                    },
+                    {
+                        senderName: "Equipe de TI Interna",
+                        senderAddr: "suporte.ti@suaempresa.com.br",
+                        date: "Hoje, 10:15",
+                        subject: "Manutenção programada da VPN neste domingo",
+                        body: [
+                            "Olá equipe,",
+                            "Informamos que neste domingo, das 02h às 05h, realizaremos a atualização dos certificados da nossa VPN corporativa.",
+                            "Nenhuma ação é necessária no momento. Caso tenha dúvidas, consulte o portal interno na intranet."
+                        ],
+                        ctaText: "Ler Comunicado na Intranet",
+                        realUrl: "https://intranet.suaempresa.com.br/avisos/manutencao-vpn",
+                        isPhishing: false,
+                        explanation: "<strong>E-mail Legítimo!</strong><br>O remetente utiliza o domínio corporativo exato (<code>@suaempresa.com.br</code>), o link aponta para a intranet oficial via <code>HTTPS</code> e não solicita credenciais, senhas ou ações urgentes suspeitas."
+                    },
+                    {
+                        senderName: "Microsoft 365 Admin",
+                        senderAddr: "no-reply@rnicrosoft-support.com",
+                        date: "Ontem, 19:50",
+                        subject: "Aviso de expiração de senha corporativa",
+                        body: [
+                            "Sua senha do Microsoft 365 expira hoje à meia-noite.",
+                            "Mantenha sua mesma senha atual clicando abaixo para validar sua sessão ativa e não perder acesso aos seus e-mails."
+                        ],
+                        ctaText: "Manter Senha Atual",
+                        realUrl: "https://login.rnicrosoft-support.com/auth/office365",
+                        isPhishing: true,
+                        explanation: "<strong>Ataque de Typosquatting (Homógrafo)!</strong><br>Observe atentamente o remetente e a URL: está escrito <code>rnicrosoft</code> (com <b>R + N</b> juntos imitando a letra <b>M</b>). Atacantes usam semelhança visual para enganar leitores apressados."
+                    },
+                    {
+                        senderName: "RH - Benefícios",
+                        senderAddr: "rh@suaempresa.com.br",
+                        date: "Ontem, 14:20",
+                        subject: "Planilha de Reajuste Salarial 2026 (Confidencial)",
+                        body: [
+                            "Olá,",
+                            "Por engano, a diretoria liberou o arquivo com os novos salários de todos os departamentos.",
+                            "Baixe o arquivo anexo <code>Reajuste_2026.xlsm</code> e habilite as macros para visualizar."
+                        ],
+                        ctaText: "Baixar Planilha (.xlsm)",
+                        realUrl: "https://cloud-files-share-anon.net/download/Reajuste_2026.xlsm",
+                        isPhishing: true,
+                        explanation: "<strong>Isca de Curiosidade + Malware!</strong><br>Mesmo que o campo 'De' pareça correto (spoofing), o link aponta para um servidor externo desconhecido oferecendo um arquivo <code>.xlsm</code> (Excel com Macros) — um vetor clássico para instalação de Ransomware."
+                    }
+                ],
+                socialEngQuizzes: [
+                    {
+                        tag: "PRETEXTING // FALSO SUPORTE",
+                        question: "Você recebe uma ligação no ramal da empresa. A pessoa diz ser do Suporte de TI e afirma: 'Estamos atualizando o servidor de e-mail e preciso que você me informe seu código MFA (autenticação de dois fatores) que acabou de chegar no seu celular.' O que você faz?",
+                        options: [
+                            { text: "Informo o código rapidamente para não atrasar a manutenção do servidor.", correct: false },
+                            { text: "Recuso informar o código, desligo e abro um chamado oficial com a equipe de TI.", correct: true },
+                            { text: "Peço para ele me enviar um e-mail confirmando o nome dele e depois passo o código.", correct: false }
+                        ],
+                        explanation: "<strong>Nunca compartilhe códigos MFA/2FA!</strong> Equipes legítimas de TI jamais pedem sua senha ou código de verificação. Esse golpe intercepta seu segundo fator em tempo real enquanto o atacante tenta fazer login com sua senha vazada."
+                    },
+                    {
+                        tag: "BAITING // MÍDIA FÍSICA",
+                        question: "Ao chegar no estacionamento da empresa, você encontra um pen drive com uma etiqueta escrita 'Folha de Pagamento - Confidencial'. Qual é a atitude segura?",
+                        options: [
+                            { text: "Conectar no meu computador de trabalho com o antivírus ligado para ver quem é o dono.", correct: false },
+                            { text: "Conectar em um computador antigo sem internet para verificar os arquivos.", correct: false },
+                            { text: "Não conectar em nenhum dispositivo e entregar imediatamente à equipe de Segurança da Informação.", correct: true }
+                        ],
+                        explanation: "<strong>Golpe clássico de Baiting (Isca)!</strong> Pen drives abandonados podem conter dispositivos 'Rubber Ducky' que simulam um teclado e executam comandos maliciosos em milissegundos assim que plugados, burlando até antivírus."
+                    },
+                    {
+                        tag: "TAILGATING // ACESSO FÍSICO",
+                        question: "Você está entrando na área restrita do escritório usando seu crachá magnético. Logo atrás vem uma pessoa vestindo uniforme de entrega carregando duas caixas pesadas e pedindo: 'Pode segurar a porta pra mim, por favor?'",
+                        options: [
+                            { text: "Seguro a porta por educação, já que ele está carregando caixas pesadas.", correct: false },
+                            { text: "Explico educadamente que a política exige registro na recepção e acompanho-o até lá.", correct: true },
+                            { text: "Deixo ele entrar, mas fico olhando para onde ele vai.", correct: false }
+                        ],
+                        explanation: "<strong>Segurança física é cibersegurança!</strong> O ataque de <em>Tailgating</em> (carona) explora a gentileza humana para obter acesso físico a salas, portas de rede desprotegidas e computadores desbloqueados."
+                    },
+                    {
+                        tag: "VISHING & CEO FRAUD",
+                        question: "Você recebe uma mensagem urgente no WhatsApp supostamente do Diretor Financeiro (usando a foto dele, mas de um número novo), pedindo uma transferência PIX imediata para fechar um contrato sigiloso.",
+                        options: [
+                            { text: "Faço a transferência imediatamente para demonstrar agilidade à diretoria.", correct: false },
+                            { text: "Respondo no próprio WhatsApp perguntando se é realmente ele.", correct: false },
+                            { text: "Ligo diretamente para o número corporativo conhecido do Diretor para confirmar por voz.", correct: true }
+                        ],
+                        explanation: "<strong>Verificação Out-of-Band (Fora de Banda)!</strong> Atacantes clonam fotos e criam senso de autoridade e sigilo. Sempre valide transações financeiras por um canal secundário oficial previamente conhecido."
+                    }
+                ]
+            },
+            en: {
+                pageTitle: "CyberGuard OS // Cyber Defense Simulator",
+                headerSubtitle: "CYBER DEFENSE TRAINING PROTOCOL",
+                hudModule: "MODULE",
+                hudCompleted: "COMPLETED",
+                soundOn: "Terminal audio enabled.",
+                soundOff: "Audio muted.",
+                introBadge: "ONLINE TRAINING SYSTEM",
+                introTitle: 'ARE YOU READY TO DEFEND THE <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">GLOBAL NETWORK?</span>',
+                introDesc: 'Welcome, Recruit. Our infrastructure is under constant attack. You will go through <strong class="text-cyan-400">4 critical real-time simulations</strong> to prove your ability to neutralize digital threats and protect confidential data.',
+                mod1Title: "Phishing Detector",
+                mod1Sub: "Forensic email auditing",
+                mod2Title: "Password Forge",
+                mod2Sub: "Brute-force resistance",
+                mod3Title: "Firewall Defense",
+                mod3Sub: "Real-time packet filtering",
+                mod4Title: "Social Engineering",
+                mod4Sub: "Rapid incident response",
+                codenamePlaceholder: "Enter a fictional codename...",
+                startBtn: "START MISSION >_",
+                opsecWarning: '<strong class="text-amber-400">OPSEC ALERT (PRIVACY):</strong> Never expose your real identity online. <strong class="text-white">DO NOT enter your real name or personal nickname</strong>; use a fictional codename only.',
+                termLine1: "[OK] Loading anti-phishing heuristics...",
+                termLine2: "[OK] Cryptographic entropy modules active.",
+                termLine3: "[OK] TCP/UDP packet rules ready.",
+                termLine4: "[ALERT] 14 intrusion attempts detected in the last hour.",
+                termLine5: "> Awaiting operator authentication...",
+                s1Tag: "Module 01 // Forensic Analysis",
+                s1Heading: "PHISHING DETECTOR",
+                s1Counter: (i, t) => `Email ${i} of ${t}`,
+                s1Desc: 'Carefully inspect the sender, link domain (hover or tap the link button), and message tone. Determine if the email is <strong class="text-emerald-400">LEGITIMATE</strong> or <strong class="text-rose-400">PHISHING</strong>.',
+                emailFrom: "From:",
+                emailSubject: "Subject:",
+                emailDestUrl: "Detected destination URL:",
+                btnLegit: "LEGITIMATE EMAIL (SAFE)",
+                btnPhishing: "REPORT PHISHING (THREAT)",
+                urlInspectToast: "URL Inspection: Always check the root domain before the first '/' slash!",
+                phishingWinTitle: "Accurate Forensic Analysis!",
+                phishingLoseTitle: "Compromise Alert!",
+                s2Tag: "Module 02 // Cryptography & Authentication",
+                s2Heading: "ANTI-BRUTE FORCE PASSWORD FORGE",
+                s2Desc: 'Modern supercomputers can test billions of combinations per second. Create a master password that reaches <strong class="text-emerald-400">100% security</strong> and withstands brute-force and dictionary attacks for centuries.',
+                pwdLabel: "Enter your high-entropy password:",
+                pwdPlaceholder: "Ex: H0t-C0ffee#2026!Orbit",
+                pwdHintBtn: "Hint 💡",
+                pwdHintToast: (sample) => `Passphrase Tip: Combine random words + symbols and numbers. Ex: ${sample}`,
+                pwdStrengthTitle: "CRYPTOGRAPHIC STRENGTH",
+                pwdEntropyLabel: "Estimated entropy:",
+                pwdCrackTitle: "TIME TO CRACK (GPU CLUSTER):",
+                pwdVuln: (p) => `VULNERABLE (${p}%)`,
+                pwdMod: (p) => `MODERATE (${p}%)`,
+                pwdStrong: "IMPENETRABLE (100%)",
+                pwdInstant: "Instant (< 1 sec)",
+                pwdMinutes: "A few minutes",
+                pwdMonths: "A few months",
+                pwdCenturies: "400+ Centuries",
+                reqLength: "Minimum 14 characters (length is king)",
+                reqUpperLower: "UPPERCASE and lowercase letters",
+                reqNumber: "At least 2 non-sequential numbers",
+                reqSymbol: "At least 2 special symbols (!@#$%&*)",
+                reqNoCommon: "No obvious patterns (1234, qwerty, password, admin, 2025/2026)",
+                pwdSubmitBtn: "VALIDATE ACCESS KEY",
+                pwdWinTitle: "Cryptographic Key Validated!",
+                pwdWinBody: "Great job! Long <em>passphrases</em> with high entropy make brute-force attacks mathematically unfeasible. Remember to use a <strong>Password Manager</strong> to avoid reusing passwords across services and always enable <strong>MFA</strong>.",
+                s3Tag: "Module 03 // Perimeter Security",
+                s3Heading: "FIREWALL INTERCEPTOR",
+                fwHealthLabel: "Server Integrity:",
+                fwTimerLabel: "Time:",
+                fwRuleMalicious: '<strong>CLICK / TAP</strong> malicious packets (<code class="text-rose-400">MALWARE, DDoS, SQLi, TROJAN</code>) to block them!',
+                fwRuleSafe: '<strong>LET PASS</strong> legitimate traffic (<code class="text-emerald-400">HTTPS, DNS, SSH-OK</code>).',
+                fwOverlayTitle: "INCOMING NETWORK TRAFFIC",
+                fwOverlayDesc: "Packets are crossing the network from left to the server core on the right. Destroy red threats before they hit the core and do not block green legitimate packets!",
+                fwStartBtn: "ACTIVATE FIREWALL NOW",
+                fwFalsePositive: "⚠️ False Positive! You blocked legitimate traffic!",
+                fwWinTitle: "Perimeter Successfully Defended!",
+                fwLoseTitle: "Firewall Overload!",
+                fwEndBody: (h) => `Final server integrity: <strong>${h}%</strong>.<br><br>A solid <strong>Next-Generation Firewall (NGFW)</strong> performs Deep Packet Inspection (DPI) to block attack signatures like <em>SQL Injection</em> and <em>DDoS</em> without disrupting essential business services.`,
+                s4Tag: "Module 04 // Human Factor",
+                s4Heading: "SOCIAL ENGINEERING DEFENSE",
+                s4Counter: (i, t) => `Scenario ${i} of ${t}`,
+                quizWinTitle: "Safe Decision!",
+                quizLoseTitle: "Vulnerability Exploited!",
+                certBadge: "OFFICIAL CYBERGUARD CERTIFICATION",
+                certTitle: "TRAINING COMPLETED",
+                certSubtitle: "This document certifies that the operator below has completed all cyber defense simulations.",
+                certAgentLabel: "CERTIFIED AGENT",
+                defaultAgentName: "Agent CyberGuard",
+                certRankLabel: "ACHIEVED RANK: ",
+                rankElite: "ELITE CYBER DEFENSE ARCHITECT",
+                rankSpec: "CYBERSECURITY SPECIALIST",
+                rankOp: "INCIDENT RESPONSE OPERATOR",
+                rankJr: "JUNIOR SECURITY ANALYST",
+                certScoreLabel: "TOTAL SCORE",
+                certAccuracyLabel: "ACCURACY",
+                certModulesLabel: "MODULES",
+                certTelemetryTitle: "MODULE TELEMETRY REPORT:",
+                certBreak1: "01. Phishing Detector",
+                certBreak2: "02. Password Forge",
+                certBreak3: "03. Firewall Defense",
+                certBreak4: "04. Social Engineering",
+                certCopyBtn: "COPY CREDENTIAL 📋",
+                certRestartBtn: "RESTART SIMULATION ↻",
+                certCopyText: (name, rank, score, acc) => `🛡️ CYBERGUARD OS CERTIFICATE\nAgent: ${name}\nRank: ${rank}\nScore: ${score} PTS (${acc})`,
+                certCopiedToast: "Credential copied to clipboard!",
+                modalBadgeOk: "THREAT NEUTRALIZED / CORRECT ACTION",
+                modalBadgeFail: "SECURITY BREACH DETECTED",
+                modalNextBtn: "CONTINUE >>",
+                footerText: "CYBERGUARD OS // EDUCATIONAL INFORMATION SECURITY SIMULATOR",
+                phishingEmails: [
+                    {
+                        senderName: "Chase Bank Security",
+                        senderAddr: "alerts@chase-security-update.com",
+                        date: "Today, 08:42",
+                        subject: "URGENT: Your account will be locked in 2 hours!",
+                        body: [
+                            "Dear Customer,",
+                            "We detected an unauthorized login attempt from an unrecognized device on your checking account.",
+                            "To avoid permanent suspension and penalty fees, verify your security key and password immediately using the link below."
+                        ],
+                        ctaText: "Unlock Account Now",
+                        realUrl: "http://chase-security-update.com/login-token",
+                        isPhishing: true,
+                        explanation: "<strong>3 Classic Phishing Red Flags:</strong><br>1. <b>Fake domain:</b> The official domain is <code>chase.com</code>, not <code>chase-security-update.com</code>.<br>2. <b>Artificial urgency:</b> Threatening account lockout in 2 hours to induce panic.<br>3. <b>Insecure HTTP protocol:</b> Banks never ask for passwords via email links."
+                    },
+                    {
+                        senderName: "Internal IT Team",
+                        senderAddr: "it.support@yourcompany.com",
+                        date: "Today, 10:15",
+                        subject: "Scheduled VPN maintenance this Sunday",
+                        body: [
+                            "Hello team,",
+                            "Please be advised that this Sunday, from 2:00 AM to 5:00 AM, we will update our corporate VPN certificates.",
+                            "No action is required at this time. If you have questions, check the internal portal on the intranet."
+                        ],
+                        ctaText: "Read Intranet Notice",
+                        realUrl: "https://intranet.yourcompany.com/notices/vpn-maintenance",
+                        isPhishing: false,
+                        explanation: "<strong>Legitimate Email!</strong><br>The sender uses the exact corporate domain (<code>@yourcompany.com</code>), the link points to the official intranet over <code>HTTPS</code>, and it does not request credentials or urgent suspicious actions."
+                    },
+                    {
+                        senderName: "Microsoft 365 Admin",
+                        senderAddr: "no-reply@rnicrosoft-support.com",
+                        date: "Yesterday, 19:50",
+                        subject: "Corporate password expiration notice",
+                        body: [
+                            "Your Microsoft 365 password expires tonight at midnight.",
+                            "Keep your current password by clicking below to validate your active session and avoid losing email access."
+                        ],
+                        ctaText: "Keep Current Password",
+                        realUrl: "https://login.rnicrosoft-support.com/auth/office365",
+                        isPhishing: true,
+                        explanation: "<strong>Typosquatting (Homograph) Attack!</strong><br>Look closely at the sender and URL: it says <code>rnicrosoft</code> (with <b>R + N</b> together mimicking the letter <b>M</b>). Attackers use visual similarity to trick hurried readers."
+                    },
+                    {
+                        senderName: "HR - Benefits",
+                        senderAddr: "hr@yourcompany.com",
+                        date: "Yesterday, 14:20",
+                        subject: "2026 Salary Adjustment Spreadsheet (Confidential)",
+                        body: [
+                            "Hello,",
+                            "By mistake, management released the file containing the new salaries for all departments.",
+                            "Download the attached file <code>Salaries_2026.xlsm</code> and enable macros to view."
+                        ],
+                        ctaText: "Download Spreadsheet (.xlsm)",
+                        realUrl: "https://cloud-files-share-anon.net/download/Salaries_2026.xlsm",
+                        isPhishing: true,
+                        explanation: "<strong>Curiosity Bait + Malware!</strong><br>Even if the 'From' field looks legitimate (spoofing), the link points to an unknown external server offering an <code>.xlsm</code> file (Macro-enabled Excel) — a classic vector for Ransomware delivery."
+                    }
+                ],
+                socialEngQuizzes: [
+                    {
+                        tag: "PRETEXTING // FAKE SUPPORT",
+                        question: "You receive a call on your office extension. The caller claims to be from IT Support and says: 'We are upgrading the mail server and need you to read back the MFA (two-factor authentication) code just sent to your phone.' What do you do?",
+                        options: [
+                            { text: "Give the code quickly so server maintenance isn't delayed.", correct: false },
+                            { text: "Refuse to share the code, hang up, and open an official ticket with the IT team.", correct: true },
+                            { text: "Ask them to email you confirming their name first, then share the code.", correct: false }
+                        ],
+                        explanation: "<strong>Never share MFA/2FA codes!</strong> Legitimate IT teams will never ask for your password or verification code. This scam intercepts your second factor in real time while an attacker logs in with your leaked password."
+                    },
+                    {
+                        tag: "BAITING // PHYSICAL MEDIA",
+                        question: "Walking into the company parking lot, you find a USB flash drive labeled 'Payroll - Confidential'. What is the safest course of action?",
+                        options: [
+                            { text: "Plug it into my work computer with antivirus enabled to see who owns it.", correct: false },
+                            { text: "Plug it into an old offline computer to check the files.", correct: false },
+                            { text: "Do not plug it into any device and hand it immediately to the Information Security team.", correct: true }
+                        ],
+                        explanation: "<strong>Classic Baiting Attack!</strong> Dropped USB drives can contain 'Rubber Ducky' hardware that emulates a keyboard and executes malicious commands in milliseconds once plugged in, bypassing standard antivirus."
+                    },
+                    {
+                        tag: "TAILGATING // PHYSICAL ACCESS",
+                        question: "You are entering a restricted office area using your keycard. Right behind you is someone in a delivery uniform carrying two heavy boxes asking: 'Could you hold the door for me, please?'",
+                        options: [
+                            { text: "Hold the door out of politeness since they are carrying heavy boxes.", correct: false },
+                            { text: "Politely explain that policy requires check-in at reception and escort them there.", correct: true },
+                            { text: "Let them in, but watch where they go.", correct: false }
+                        ],
+                        explanation: "<strong>Physical security is cybersecurity!</strong> <em>Tailgating</em> exploits human politeness to gain physical access to restricted rooms, unprotected network ports, and unlocked workstations."
+                    },
+                    {
+                        tag: "VISHING & CEO FRAUD",
+                        question: "You receive an urgent WhatsApp message supposedly from the CFO (using their profile photo, but from a new number), requesting an immediate wire transfer to close a confidential deal.",
+                        options: [
+                            { text: "Process the transfer immediately to show agility to executive leadership.", correct: false },
+                            { text: "Reply on WhatsApp asking if it is really them.", correct: false },
+                            { text: "Call the CFO's known corporate phone number directly to verify by voice.", correct: true }
+                        ],
+                        explanation: "<strong>Out-of-Band Verification!</strong> Attackers clone profile photos and manufacture authority and secrecy. Always verify financial transactions through a secondary, pre-established official channel."
+                    }
+                ]
+            },
+            es: {
+                pageTitle: "CyberGuard OS // Simulador de Ciberdefensa",
+                headerSubtitle: "PROTOCOLO DE ENTRENAMIENTO DE CIBERDEFENSA",
+                hudModule: "MÓDULO",
+                hudCompleted: "COMPLETADO",
+                soundOn: "Audio del terminal activado.",
+                soundOff: "Audio silenciado.",
+                introBadge: "SISTEMA DE ENTRENAMIENTO EN LÍNEA",
+                introTitle: '¿ESTÁS LISTO PARA DEFENDER LA <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">RED GLOBAL?</span>',
+                introDesc: 'Bienvenido(a), Recluta. Nuestra infraestructura está bajo ataque constante. Pasarás por <strong class="text-cyan-400">4 simulaciones críticas</strong> en tiempo real para demostrar tu capacidad de neutralizar amenazas digitales y proteger datos confidenciales.',
+                mod1Title: "Detector de Phishing",
+                mod1Sub: "Auditoría forense de correos",
+                mod2Title: "Forja de Contraseñas",
+                mod2Sub: "Resistencia a fuerza bruta",
+                mod3Title: "Defensa de Firewall",
+                mod3Sub: "Filtrado de paquetes en tiempo real",
+                mod4Title: "Ingeniería Social",
+                mod4Sub: "Respuesta rápida a incidentes",
+                codenamePlaceholder: "Escribe un nombre clave ficticio...",
+                startBtn: "INICIAR MISIÓN >_",
+                opsecWarning: '<strong class="text-amber-400">ALERTA OPSEC (PRIVACIDAD):</strong> Nunca expongas tu identidad real en la red. <strong class="text-white">NO escribas tu nombre verdadero ni tu apodo personal</strong>; utiliza solo un nombre clave ficticio.',
+                termLine1: "[OK] Cargando heurística anti-phishing...",
+                termLine2: "[OK] Módulos de entropía criptográfica activos.",
+                termLine3: "[OK] Reglas de paquetes TCP/UDP listas.",
+                termLine4: "[ALERTA] 14 intentos de intrusión detectados en la última hora.",
+                termLine5: "> Esperando autenticación del operador...",
+                s1Tag: "Módulo 01 // Análisis Forense",
+                s1Heading: "DETECTOR DE PHISHING",
+                s1Counter: (i, t) => `Correo ${i} de ${t}`,
+                s1Desc: 'Inspecciona cuidadosamente el remitente, el dominio del enlace (pasa el cursor o toca el botón de enlace) y el tono del mensaje. Determina si el correo es <strong class="text-emerald-400">LEGÍTIMO</strong> o <strong class="text-rose-400">PHISHING</strong>.',
+                emailFrom: "De:",
+                emailSubject: "Asunto:",
+                emailDestUrl: "URL de destino detectada:",
+                btnLegit: "CORREO LEGÍTIMO (SEGURO)",
+                btnPhishing: "REPORTAR PHISHING (AMENAZA)",
+                urlInspectToast: "Inspección de URL: ¡Verifica siempre el dominio principal antes de la primera barra '/'!",
+                phishingWinTitle: "¡Análisis Forense Preciso!",
+                phishingLoseTitle: "¡Alerta de Compromiso!",
+                s2Tag: "Módulo 02 // Criptografía y Autenticación",
+                s2Heading: "FORJA DE CONTRASEÑA ANTI-FUERZA BRUTA",
+                s2Desc: 'Las supercomputadoras modernas pueden probar miles de millones de combinaciones por segundo. Crea una contraseña maestra que alcance <strong class="text-emerald-400">100% de seguridad</strong> y resista por siglos contra ataques de fuerza bruta y diccionario.',
+                pwdLabel: "Escribe tu contraseña de alta entropía:",
+                pwdPlaceholder: "Ej: C@fe-Caliente#2026!Nave",
+                pwdHintBtn: "Pista 💡",
+                pwdHintToast: (sample) => `Consejo de Passphrase: Combina palabras aleatorias + símbolos y números. Ej: ${sample}`,
+                pwdStrengthTitle: "FUERZA CRIPTOGRÁFICA",
+                pwdEntropyLabel: "Entropía estimada:",
+                pwdCrackTitle: "TIEMPO DE DESCIFRADO (CLÚSTER GPU):",
+                pwdVuln: (p) => `VULNERABLE (${p}%)`,
+                pwdMod: (p) => `MODERADA (${p}%)`,
+                pwdStrong: "IMPENETRABLE (100%)",
+                pwdInstant: "Instantáneo (< 1 seg)",
+                pwdMinutes: "Unos minutos",
+                pwdMonths: "Unos meses",
+                pwdCenturies: "400+ Siglos",
+                reqLength: "Mínimo 14 caracteres (la longitud es clave)",
+                reqUpperLower: "Letras MAYÚSCULAS y minúsculas",
+                reqNumber: "Al menos 2 números no secuenciales",
+                reqSymbol: "Al menos 2 símbolos especiales (!@#$%&*)",
+                reqNoCommon: "Sin patrones obvios (1234, qwerty, clave, admin, 2025/2026)",
+                pwdSubmitBtn: "VALIDAR CLAVE DE ACCESO",
+                pwdWinTitle: "¡Clave Criptográfica Validada!",
+                pwdWinBody: "¡Excelente trabajo! Las contraseñas largas (<em>passphrases</em>) con alta entropía hacen que los ataques de fuerza bruta sean matemáticamente inviables. Recuerda usar un <strong>Gestor de Contraseñas</strong> para no repetir claves y activar siempre <strong>MFA</strong>.",
+                s3Tag: "Módulo 03 // Seguridad Perimetral",
+                s3Heading: "FIREWALL INTERCEPTOR",
+                fwHealthLabel: "Integridad del Servidor:",
+                fwTimerLabel: "Tiempo:",
+                fwRuleMalicious: '<strong>HAZ CLIC / TOCA</strong> los paquetes maliciosos (<code class="text-rose-400">MALWARE, DDoS, SQLi, TROJAN</code>) para bloquearlos!',
+                fwRuleSafe: '<strong>DEJA PASAR</strong> el tráfico legítimo (<code class="text-emerald-400">HTTPS, DNS, SSH-OK</code>).',
+                fwOverlayTitle: "TRÁFICO DE RED ENTRANTE",
+                fwOverlayDesc: "Los paquetes cruzan la red de izquierda a derecha hacia el núcleo del servidor. ¡Destruye las amenazas rojas antes de que lleguen al núcleo y no bloquees los paquetes verdes legítimos!",
+                fwStartBtn: "ACTIVAR FIREWALL AHORA",
+                fwFalsePositive: "⚠️ ¡Falso Positivo! ¡Bloqueaste tráfico legítimo!",
+                fwWinTitle: "¡Perímetro Defendido con Éxito!",
+                fwLoseTitle: "¡Sobrecarga en el Firewall!",
+                fwEndBody: (h) => `Integridad final del servidor: <strong>${h}%</strong>.<br><br>Un buen <strong>Firewall de Próxima Generación (NGFW)</strong> realiza inspección profunda de paquetes (DPI) para bloquear firmas de ataques como <em>SQL Injection</em> y <em>DDoS</em> sin interrumpir servicios legítimos esenciales.`,
+                s4Tag: "Módulo 04 // Factor Humano",
+                s4Heading: "DEFENSA CONTRA INGENIERÍA SOCIAL",
+                s4Counter: (i, t) => `Escenario ${i} de ${t}`,
+                quizWinTitle: "¡Decisión Segura!",
+                quizLoseTitle: "¡Vulnerabilidad Explotada!",
+                certBadge: "CERTIFICACIÓN OFICIAL CYBERGUARD",
+                certTitle: "ENTRENAMIENTO COMPLETADO",
+                certSubtitle: "Este documento certifica que el operador ha completado todas las simulaciones de defensa cibernética.",
+                certAgentLabel: "AGENTE CERTIFICADO",
+                defaultAgentName: "Agente CyberGuard",
+                certRankLabel: "RANGO ALCANZADO: ",
+                rankElite: "ARQUITECTO(A) ÉLITE DE CIBERDEFENSA",
+                rankSpec: "ESPECIALISTA EN CIBERSEGURIDAD",
+                rankOp: "OPERADOR(A) DE RESPUESTA A INCIDENTES",
+                rankJr: "ANALISTA JUNIOR DE SEGURIDAD",
+                certScoreLabel: "PUNTUACIÓN TOTAL",
+                certAccuracyLabel: "PRECISIÓN",
+                certModulesLabel: "MÓDULOS",
+                certTelemetryTitle: "INFORME DE TELEMETRÍA POR MÓDULO:",
+                certBreak1: "01. Detector de Phishing",
+                certBreak2: "02. Forja de Contraseñas",
+                certBreak3: "03. Defensa de Firewall",
+                certBreak4: "04. Ingeniería Social",
+                certCopyBtn: "COPIAR CREDENCIAL 📋",
+                certRestartBtn: "REINICIAR SIMULACIÓN ↻",
+                certCopyText: (name, rank, score, acc) => `🛡️ CERTIFICADO CYBERGUARD OS\nAgente: ${name}\nRango: ${rank}\nPuntuación: ${score} PTS (${acc})`,
+                certCopiedToast: "¡Credencial copiada al portapapeles!",
+                modalBadgeOk: "AMENAZA NEUTRALIZADA / ACCIÓN CORRECTA",
+                modalBadgeFail: "FALLO DE SEGURIDAD DETECTADO",
+                modalNextBtn: "CONTINUAR >>",
+                footerText: "CYBERGUARD OS // SIMULADOR EDUCATIVO DE SEGURIDAD DE LA INFORMACIÓN",
+                phishingEmails: [
+                    {
+                        senderName: "Seguridad Banco Santander",
+                        senderAddr: "alertas@santander-seguridad-actualiza.com",
+                        date: "Hoy, 08:42",
+                        subject: "URGENTE: ¡Tu cuenta será bloqueada en 2 horas!",
+                        body: [
+                            "Estimado(a) Cliente,",
+                            "Detectamos un acceso no autorizado desde un dispositivo desconocido en su cuenta corriente.",
+                            "Para evitar el bloqueo permanente y multas, confirme su clave de seguridad y contraseña de inmediato en el enlace inferior."
+                        ],
+                        ctaText: "Desbloquear Cuenta Ahora",
+                        realUrl: "http://santander-seguridad-actualiza.com/login-token",
+                        isPhishing: true,
+                        explanation: "<strong>3 Señales Clásicas de Phishing:</strong><br>1. <b>Dominio falso:</b> El dominio oficial es <code>santander.com</code>, no <code>santander-seguridad-actualiza.com</code>.<br>2. <b>Urgencia artificial:</b> Amenaza de bloqueo en 2 horas para inducir pánico.<br>3. <b>Protocolo HTTP inseguro:</b> Los bancos nunca piden contraseñas mediante enlaces de correo."
+                    },
+                    {
+                        senderName: "Equipo de TI Interno",
+                        senderAddr: "soporte.ti@tuempresa.com",
+                        date: "Hoy, 10:15",
+                        subject: "Mantenimiento programado de la VPN este domingo",
+                        body: [
+                            "Hola equipo,",
+                            "Informamos que este domingo, de 02:00 a 05:00, realizaremos la actualización de certificados de nuestra VPN corporativa.",
+                            "No se requiere ninguna acción por el momento. Si tienen dudas, consulten el portal interno en la intranet."
+                        ],
+                        ctaText: "Leer Comunicado en la Intranet",
+                        realUrl: "https://intranet.tuempresa.com/avisos/mantenimiento-vpn",
+                        isPhishing: false,
+                        explanation: "<strong>¡Correo Legítimo!</strong><br>El remitente utiliza el dominio corporativo exacto (<code>@tuempresa.com</code>), el enlace apunta a la intranet oficial vía <code>HTTPS</code> y no solicita credenciales ni acciones urgentes sospechosas."
+                    },
+                    {
+                        senderName: "Microsoft 365 Admin",
+                        senderAddr: "no-reply@rnicrosoft-support.com",
+                        date: "Ayer, 19:50",
+                        subject: "Aviso de expiración de contraseña corporativa",
+                        body: [
+                            "Su contraseña de Microsoft 365 expira esta noche a medianoche.",
+                            "Mantenga su misma contraseña actual haciendo clic abajo para validar su sesión activa y no perder acceso a sus correos."
+                        ],
+                        ctaText: "Mantener Contraseña Actual",
+                        realUrl: "https://login.rnicrosoft-support.com/auth/office365",
+                        isPhishing: true,
+                        explanation: "<strong>¡Ataque de Typosquatting (Homógrafo)!</strong><br>Observa atentamente el remitente y la URL: dice <code>rnicrosoft</code> (con <b>R + N</b> juntas imitando la letra <b>M</b>). Los atacantes usan similitud visual para engañar a lectores apresurados."
+                    },
+                    {
+                        senderName: "RR.HH. - Beneficios",
+                        senderAddr: "rrhh@tuempresa.com",
+                        date: "Ayer, 14:20",
+                        subject: "Hoja de Ajuste Salarial 2026 (Confidencial)",
+                        body: [
+                            "Hola,",
+                            "Por error, la dirección publicó el archivo con los nuevos salarios de todos los departamentos.",
+                            "Descarga el archivo adjunto <code>Salarios_2026.xlsm</code> y habilita las macros para visualizarlo."
+                        ],
+                        ctaText: "Descargar Hoja (.xlsm)",
+                        realUrl: "https://cloud-files-share-anon.net/download/Salarios_2026.xlsm",
+                        isPhishing: true,
+                        explanation: "<strong>¡Cebo de Curiosidad + Malware!</strong><br>Aunque el campo 'De' parezca correcto (spoofing), el enlace apunta a un servidor externo desconocido que ofrece un archivo <code>.xlsm</code> (Excel con Macros) — un vector clásico para instalar Ransomware."
+                    }
+                ],
+                socialEngQuizzes: [
+                    {
+                        tag: "PRETEXTING // FALSO SOPORTE",
+                        question: "Recibes una llamada en la extensión de la oficina. La persona dice ser del Soporte de TI y afirma: 'Estamos actualizando el servidor de correo y necesito que me dictes el código MFA (autenticación de dos factores) que acaba de llegar a tu móvil.' ¿Qué haces?",
+                        options: [
+                            { text: "Le doy el código rápidamente para no retrasar el mantenimiento del servidor.", correct: false },
+                            { text: "Me niego a dar el código, cuelgo y abro un ticket oficial con el equipo de TI.", correct: true },
+                            { text: "Le pido que me envíe un correo confirmando su nombre y luego le paso el código.", correct: false }
+                        ],
+                        explanation: "<strong>¡Nunca compartas códigos MFA/2FA!</strong> Los equipos legítimos de TI jamás piden tu contraseña ni códigos de verificación. Esta estafa intercepta tu segundo factor en tiempo real mientras el atacante inicia sesión con tu contraseña filtrada."
+                    },
+                    {
+                        tag: "BAITING // MEDIOS FÍSICOS",
+                        question: "Al llegar al estacionamiento de la empresa, encuentras una memoria USB con una etiqueta que dice 'Nómina - Confidencial'. ¿Cuál es la actitud segura?",
+                        options: [
+                            { text: "Conectarla en mi computadora de trabajo con el antivirus activo para ver de quién es.", correct: false },
+                            { text: "Conectarla en una computadora vieja sin internet para revisar los archivos.", correct: false },
+                            { text: "No conectarla en ningún dispositivo y entregarla de inmediato al equipo de Seguridad de la Información.", correct: true }
+                        ],
+                        explanation: "<strong>¡Ataque clásico de Baiting (Cebo)!</strong> Las memorias USB abandonadas pueden contener hardware 'Rubber Ducky' que simula un teclado y ejecuta comandos maliciosos en milisegundos al conectarse, evadiendo antivirus."
+                    },
+                    {
+                        tag: "TAILGATING // ACCESO FÍSICO",
+                        question: "Estás entrando al área restringida de la oficina con tu tarjeta de acceso. Justo detrás viene una persona con uniforme de mensajería cargando dos cajas pesadas y pidiendo: '¿Me puedes sostener la puerta, por favor?'",
+                        options: [
+                            { text: "Sostengo la puerta por cortesía, ya que lleva cajas pesadas.", correct: false },
+                            { text: "Le explico amablemente que la política exige registro en recepción y lo acompaño hasta allí.", correct: true },
+                            { text: "Lo dejo pasar, pero me quedo mirando hacia dónde va.", correct: false }
+                        ],
+                        explanation: "<strong>¡La seguridad física es ciberseguridad!</strong> El <em>Tailgating</em> explota la amabilidad humana para obtener acceso físico a salas restringidas, puertos de red desprotegidos y equipos desbloqueados."
+                    },
+                    {
+                        tag: "VISHING Y FRAUDE DEL CEO",
+                        question: "Recibes un mensaje urgente en WhatsApp supuestamente del Director Financiero (usando su foto de perfil, pero desde un número nuevo), pidiendo una transferencia inmediata para cerrar un contrato confidencial.",
+                        options: [
+                            { text: "Realizo la transferencia de inmediato para demostrar agilidad a la dirección.", correct: false },
+                            { text: "Respondo en el mismo WhatsApp preguntando si realmente es él.", correct: false },
+                            { text: "Llamo directamente al número corporativo conocido del Director para confirmar por voz.", correct: true }
+                        ],
+                        explanation: "<strong>¡Verificación Fuera de Banda (Out-of-Band)!</strong> Los atacantes clonan fotos de perfil y crean falsa autoridad y urgencia. Valida siempre las transacciones financieras por un canal secundario oficial previamente conocido."
+                    }
+                ]
+            }
+        };
+
+        function t(key) {
+            return i18nData[currentLang][key];
+        }
+
+        function setLanguage(lang) {
+            if (!i18nData[lang]) return;
+            currentLang = lang;
+            playSound('click');
+
+            // Atualiza botões ativos no seletor
+            ['pt', 'en', 'es'].forEach(code => {
+                const btn = document.getElementById(`lang-btn-${code}`);
+                if (code === lang) {
+                    btn.className = "px-2 py-1 rounded-md bg-cyan-500 text-slate-950 transition cursor-pointer";
+                } else {
+                    btn.className = "px-2 py-1 rounded-md text-slate-400 hover:text-white transition cursor-pointer";
+                }
+            });
+
+            document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
+            document.title = t('pageTitle');
+
+            // Atualiza textos simples
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (typeof t(key) === 'string') el.textContent = t(key);
+            });
+
+            // Atualiza textos com HTML interno
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                const key = el.getAttribute('data-i18n-html');
+                if (typeof t(key) === 'string') el.innerHTML = t(key);
+            });
+
+            // Atualiza placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (typeof t(key) === 'string') el.placeholder = t(key);
+            });
+
+            // Atualiza checklist de senhas
+            document.querySelector('#req-length .req-text').textContent = t('reqLength');
+            document.querySelector('#req-upper-lower .req-text').textContent = t('reqUpperLower');
+            document.querySelector('#req-number .req-text').textContent = t('reqNumber');
+            document.querySelector('#req-symbol .req-text').textContent = t('reqSymbol');
+            document.querySelector('#req-no-common .req-text').textContent = t('reqNoCommon');
+
+            // Re-renderiza o conteúdo dinâmico da etapa ativa
+            if (gameState.currentStage === 1) {
+                renderPhishingEmail();
+            } else if (gameState.currentStage === 2) {
+                evaluatePassword();
+            } else if (gameState.currentStage === 4) {
+                if (!document.getElementById('screen-final').classList.contains('hidden')) {
+                    showFinalCertificate();
+                } else {
+                    renderQuizQuestion();
+                }
+            }
+
+            if (!document.getElementById('hud-stats').classList.contains('hidden')) {
+                const pct = parseFloat(document.getElementById('hud-progress-bar').style.width) || 0;
+                updateHUD(gameState.currentStage || 1, pct);
+            }
+        }
         /* =========================================================================
            SISTEMA DE ÁUDIO SINTETIZADO (TONE.JS)
            ========================================================================= */
@@ -604,7 +1317,7 @@
             audioEnabled = !audioEnabled;
             document.getElementById('icon-sound-on').classList.toggle('hidden', !audioEnabled);
             document.getElementById('icon-sound-off').classList.toggle('hidden', audioEnabled);
-            showToast(audioEnabled ? "Áudio do terminal ativado." : "Áudio silenciado.");
+            showToast(audioEnabled ? t('soundOn') : t('soundOff'));
         }
 
         /* =========================================================================
@@ -622,114 +1335,6 @@
         };
 
         /* =========================================================================
-           BANCO DE DADOS DOS DESAFIOS
-           ========================================================================= */
-        const phishingEmails = [
-            {
-                senderName: "Segurança Banco Bradesco",
-                senderAddr: "alertas@bradesco-seguranca-atualiza.com.br",
-                date: "Hoje, 08:42",
-                subject: "URGENTE: Sua conta será bloqueada em 2 horas!",
-                body: [
-                    "Prezado(a) Cliente,",
-                    "Detectamos um acesso não autorizado vindo de um dispositivo desconhecido em sua conta corrente.",
-                    "Para evitar o bloqueio permanente e multa contratual, confirme sua chave de segurança e senha imediatamente no link abaixo."
-                ],
-                ctaText: "Desbloquear Conta Agora",
-                realUrl: "http://bradesco-seguranca-atualiza.com.br/login-token",
-                isPhishing: true,
-                explanation: "<strong>3 Sinais Clássicos de Phishing:</strong><br>1. <b>Domínio falso:</b> O domínio oficial é <code>bradesco.com.br</code>, não <code>bradesco-seguranca-atualiza.com.br</code>.<br>2. <b>Senso de urgência artificial:</b> Ameaça de bloqueio em 2 horas para induzir pânico.<br>3. <b>Protocolo HTTP inseguro:</b> Sites bancários nunca pedem senha por link de e-mail."
-            },
-            {
-                senderName: "Equipe de TI Interna",
-                senderAddr: "suporte.ti@suaempresa.com.br",
-                date: "Hoje, 10:15",
-                subject: "Manutenção programada da VPN neste domingo",
-                body: [
-                    "Olá equipe,",
-                    "Informamos que neste domingo, das 02h às 05h, realizaremos a atualização dos certificados da nossa VPN corporativa.",
-                    "Nenhuma ação é necessária no momento. Caso tenha dúvidas, consulte o portal interno na intranet."
-                ],
-                ctaText: "Ler Comunicado na Intranet",
-                realUrl: "https://intranet.suaempresa.com.br/avisos/manutencao-vpn",
-                isPhishing: false,
-                explanation: "<strong>E-mail Legítimo!</strong><br>O remetente utiliza o domínio corporativo exato (<code>@suaempresa.com.br</code>), o link aponta para a intranet oficial via <code>HTTPS</code> e não solicita credenciais, senhas ou ações urgentes suspeitas."
-            },
-            {
-                senderName: "Microsoft 365 Admin",
-                senderAddr: "no-reply@rnicrosoft-support.com",
-                date: "Ontem, 19:50",
-                subject: "Aviso de expiração de senha corporativa",
-                body: [
-                    "Sua senha do Microsoft 365 expira hoje à meia-noite.",
-                    "Mantenha sua mesma senha atual clicando abaixo para validar sua sessão ativa e não perder acesso aos seus e-mails."
-                ],
-                ctaText: "Manter Senha Atual",
-                realUrl: "https://login.rnicrosoft-support.com/auth/office365",
-                isPhishing: true,
-                explanation: "<strong>Ataque de Typosquatting (Homógrafo)!</strong><br>Observe atentamente o remetente e a URL: está escrito <code>rnicrosoft</code> (com <b>R + N</b> juntos imitando a letra <b>M</b>). Atacantes usam semelhança visual para enganar leitores apressados."
-            },
-            {
-                senderName: "RH - Benefícios",
-                senderAddr: "rh@suaempresa.com.br",
-                date: "Ontem, 14:20",
-                subject: "Planilha de Reajuste Salarial 2026 (Confidencial)",
-                body: [
-                    "Olá,",
-                    "Por engano, a diretoria liberou o arquivo com os novos salários de todos os departamentos.",
-                    "Baixe o arquivo anexo <code>Reajuste_2026.xlsm</code> e habilite as macros para visualizar."
-                ],
-                ctaText: "Baixar Planilha (.xlsm)",
-                realUrl: "https://cloud-files-share-anon.net/download/Reajuste_2026.xlsm",
-                isPhishing: true,
-                explanation: "<strong>Isca de Curiosidade + Malware!</strong><br>Mesmo que o campo 'De' pareça correto (spoofing), o link aponta para um servidor externo desconhecido oferecendo um arquivo <code>.xlsm</code> (Excel com Macros) — um vetor clássico para instalação de Ransomware."
-            }
-        ];
-
-        const socialEngQuizzes = [
-            {
-                tag: "PRETEXTING // FALSO SUPORTE",
-                question: "Você recebe uma ligação no ramal da empresa. A pessoa diz ser do Suporte de TI e afirma: 'Estamos atualizando o servidor de e-mail e preciso que você me informe seu código MFA (autenticação de dois fatores) que acabou de chegar no seu celular.' O que você faz?",
-                options: [
-                    { text: "Informo o código rapidamente para não atrasar a manutenção do servidor.", correct: false },
-                    { text: "Recuso informar o código, desligo e abro um chamado oficial com a equipe de TI.", correct: true },
-                    { text: "Peço para ele me enviar um e-mail confirmando o nome dele e depois passo o código.", correct: false }
-                ],
-                explanation: "<strong>Nunca compartilhe códigos MFA/2FA!</strong> Equipes legítimas de TI jamais pedem sua senha ou código de verificação. Esse golpe intercepta seu segundo fator em tempo real enquanto o atacante tenta fazer login com sua senha vazada."
-            },
-            {
-                tag: "BAITING // MÍDIA FÍSICA",
-                question: "Ao chegar no estacionamento da empresa, você encontra um pen drive com uma etiqueta escrita 'Folha de Pagamento - Confidencial'. Qual é a atitude segura?",
-                options: [
-                    { text: "Conectar no meu computador de trabalho com o antivírus ligado para ver quem é o dono.", correct: false },
-                    { text: "Conectar em um computador antigo sem internet para verificar os arquivos.", correct: false },
-                    { text: "Não conectar em nenhum dispositivo e entregar imediatamente à equipe de Segurança da Informação.", correct: true }
-                ],
-                explanation: "<strong>Golpe clássico de Baiting (Isca)!</strong> Pen drives abandonados podem conter dispositivos 'Rubber Ducky' que simulam um teclado e executam comandos maliciosos em milissegundos assim que plugados, burlando até antivírus."
-            },
-            {
-                tag: "TAILGATING // ACESSO FÍSICO",
-                question: "Você está entrando na área restrita do escritório usando seu crachá magnético. Logo atrás vem uma pessoa vestindo uniforme de entrega carregando duas caixas pesadas e pedindo: 'Pode segurar a porta pra mim, por favor?'",
-                options: [
-                    { text: "Seguro a porta por educação, já que ele está carregando caixas pesadas.", correct: false },
-                    { text: "Explico educadamente que a política exige registro na recepção e acompanho-o até lá.", correct: true },
-                    { text: "Deixo ele entrar, mas fico olhando para onde ele vai.", correct: false }
-                ],
-                explanation: "<strong>Segurança física é cibersegurança!</strong> O ataque de <em>Tailgating</em> (carona) explora a gentileza humana para obter acesso físico a salas, portas de rede desprotegidas e computadores desbloqueados."
-            },
-            {
-                tag: "VISHING & CEO FRAUD",
-                question: "Você recebe uma mensagem urgente no WhatsApp supostamente do Diretor Financeiro (usando a foto dele, mas de um número novo), pedindo uma transferência PIX imediata para fechar um contrato sigiloso.",
-                options: [
-                    { text: "Faço a transferência imediatamente para demonstrar agilidade à diretoria.", correct: false },
-                    { text: "Respondo no próprio WhatsApp perguntando se é realmente ele.", correct: false },
-                    { text: "Ligo diretamente para o número corporativo conhecido do Diretor para confirmar por voz.", correct: true }
-                ],
-                explanation: "<strong>Verificação Out-of-Band (Fora de Banda)!</strong> Atacantes clonam fotos e criam senso de autoridade e sigilo. Sempre valide transações financeiras por um canal secundário oficial previamente conhecido."
-            }
-        ];
-
-        /* =========================================================================
            NAVEGAÇÃO E UTILITÁRIOS DE UI
            ========================================================================= */
         function showScreen(screenId) {
@@ -744,8 +1349,8 @@
         function updateHUD(stageNum, progressPercent) {
             const hudStats = document.getElementById('hud-stats');
             hudStats.classList.remove('hidden');
-            document.getElementById('hud-stage-label').textContent = `MÓDULO ${stageNum}/4`;
-            document.getElementById('hud-progress-text').textContent = `${Math.round(progressPercent)}% CONCLUÍDO`;
+            document.getElementById('hud-stage-label').textContent = `${t('hudModule')} ${stageNum}/4`;
+            document.getElementById('hud-progress-text').textContent = `${Math.round(progressPercent)}% ${t('hudCompleted')}`;
             document.getElementById('hud-progress-bar').style.width = `${progressPercent}%`;
             document.getElementById('hud-score').textContent = String(gameState.score).padStart(4, '0');
         }
@@ -774,7 +1379,7 @@
             icon.textContent = isSuccess ? '✓' : '✕';
 
             badge.className = `text-[11px] font-bold uppercase tracking-wider ${isSuccess ? 'text-emerald-400' : 'text-rose-400'}`;
-            badge.textContent = isSuccess ? 'AMEAÇA NEUTRALIZADA / AÇÃO CORRETA' : 'FALHA DE SEGURANÇA DETECTADA';
+            badge.textContent = isSuccess ? t('modalBadgeOk') : t('modalBadgeFail');
 
             document.getElementById('feedback-title').textContent = title;
             document.getElementById('feedback-body').innerHTML = htmlBody;
@@ -812,7 +1417,7 @@
             playSound('success');
 
             const nameInput = document.getElementById('player-name-input').value.trim();
-            gameState.playerName = nameInput || "Agente CyberGuard";
+            gameState.playerName = nameInput || t('defaultAgentName');
             gameState.score = 0;
             gameState.stageScores = { 1: 0, 2: 0, 3: 0, 4: 0 };
             gameState.phishingIndex = 0;
@@ -833,9 +1438,10 @@
 
         function renderPhishingEmail() {
             const idx = gameState.phishingIndex;
-            const email = phishingEmails[idx];
+            const emails = t('phishingEmails');
+            const email = emails[idx];
 
-            document.getElementById('phishing-counter').textContent = `E-mail ${idx + 1} de ${phishingEmails.length}`;
+            document.getElementById('phishing-counter').textContent = t('s1Counter')(idx + 1, emails.length);
             document.getElementById('email-sender-name').textContent = email.senderName;
             document.getElementById('email-sender-addr').textContent = `<${email.senderAddr}>`;
             document.getElementById('email-date').textContent = email.date;
@@ -849,11 +1455,12 @@
 
         function toggleLinkPreview() {
             playSound('click');
-            showToast("Inspeção de URL: Verifique sempre o domínio principal antes da primeira barra '/'!");
+            showToast(t('urlInspectToast'));
         }
 
         function answerPhishing(userSaidPhishing) {
-            const email = phishingEmails[gameState.phishingIndex];
+            const emails = t('phishingEmails');
+            const email = emails[gameState.phishingIndex];
             const isCorrect = (userSaidPhishing === email.isPhishing);
 
             if (isCorrect) {
@@ -862,13 +1469,13 @@
 
             showFeedback(
                 isCorrect,
-                isCorrect ? "Análise Forense Precisa!" : "Alerta de Comprometimento!",
+                isCorrect ? t('phishingWinTitle') : t('phishingLoseTitle'),
                 email.explanation,
                 isCorrect ? "+100 PTS" : "+0 PTS",
                 () => {
                     gameState.phishingIndex++;
-                    updateHUD(1, (gameState.phishingIndex / phishingEmails.length) * 25);
-                    if (gameState.phishingIndex < phishingEmails.length) {
+                    updateHUD(1, (gameState.phishingIndex / emails.length) * 25);
+                    if (gameState.phishingIndex < emails.length) {
                         renderPhishingEmail();
                     } else {
                         startStage2();
@@ -890,13 +1497,14 @@
 
         function generatePassphraseHint() {
             playSound('click');
-            const samples = [
-                "Tigre#Azul94!Montanha$",
-                "Cafe@Quente82*Orbita!",
-                "Foguete$73Lunar#Escudo!"
-            ];
+            const samplesByLang = {
+                pt: ["Tigre#Azul94!Montanha$", "Cafe@Quente82*Orbita!", "Foguete$73Lunar#Escudo!"],
+                en: ["Tiger#Blue94!Mountain$", "Hot@Coffee82*Orbit!", "Rocket$73Lunar#Shield!"],
+                es: ["Tigre#Azul94!Montana$", "Cafe@Caliente82*Orbita!", "Cohete$73Lunar#Escudo!"]
+            };
+            const samples = samplesByLang[currentLang];
             const pick = samples[Math.floor(Math.random() * samples.length)];
-            showToast(`Dica de Passphrase: Combine palavras aleatórias + símbolos e números. Ex: ${pick}`);
+            showToast(t('pwdHintToast')(pick));
         }
 
         function evaluatePassword() {
@@ -908,7 +1516,7 @@
             const hasNumbers = numbersMatch.length >= 2 && !/(012|123|234|345|456|567|678|789)/.test(pwd);
             const symbolsMatch = pwd.match(/[^a-zA-Z0-9\s]/g) || [];
             const hasSymbols = symbolsMatch.length >= 2;
-            const commonPatterns = /(senha|password|1234|qwerty|admin|2024|2025|2026|brasil|futebol)/i;
+            const commonPatterns = /(senha|password|clave|contrasena|1234|qwerty|admin|2024|2025|2026|brasil|futebol)/i;
             const noCommon = pwd.length > 0 && !commonPatterns.test(pwd);
 
             updateReqUI('req-length', hasLength);
@@ -941,21 +1549,21 @@
             if (percent < 40) {
                 bar.className = "h-full bg-rose-500 transition-all duration-300";
                 label.className = "font-bold text-rose-400";
-                label.textContent = `VULNERÁVEL (${percent}%)`;
+                label.textContent = t('pwdVuln')(percent);
                 crackTime.className = "font-display text-xl sm:text-2xl font-bold text-rose-400 mt-1";
-                crackTime.textContent = pwd.length < 6 ? "Instantâneo (< 1 seg)" : "Alguns minutos";
+                crackTime.textContent = pwd.length < 6 ? t('pwdInstant') : t('pwdMinutes');
             } else if (percent < 100) {
                 bar.className = "h-full bg-amber-400 transition-all duration-300";
                 label.className = "font-bold text-amber-400";
-                label.textContent = `MODERADA (${percent}%)`;
+                label.textContent = t('pwdMod')(percent);
                 crackTime.className = "font-display text-xl sm:text-2xl font-bold text-amber-400 mt-1";
-                crackTime.textContent = "Alguns meses";
+                crackTime.textContent = t('pwdMonths');
             } else {
                 bar.className = "h-full bg-emerald-400 transition-all duration-300";
                 label.className = "font-bold text-emerald-400";
-                label.textContent = `IMPENETRÁVEL (100%)`;
+                label.textContent = t('pwdStrong');
                 crackTime.className = "font-display text-xl sm:text-2xl font-bold text-emerald-400 mt-1";
-                crackTime.textContent = "400+ Séculos";
+                crackTime.textContent = t('pwdCenturies');
             }
 
             submitBtn.disabled = (percent < 100);
@@ -978,8 +1586,8 @@
             updateHUD(2, 50);
             showFeedback(
                 true,
-                "Chave Criptográfica Validada!",
-                "Excelente trabalho! Senhas longas (<em>passphrases</em>) com alta entropia tornam ataques de força bruta matematicamente inviáveis. Lembre-se de usar um <strong>Gerenciador de Senhas</strong> para não repetir senhas entre serviços e ativar sempre o <strong>MFA</strong>.",
+                t('pwdWinTitle'),
+                t('pwdWinBody'),
                 "+300 PTS",
                 () => startStage3()
             );
@@ -1119,7 +1727,7 @@
                         fwState.health = Math.max(0, fwState.health - 10);
                         document.getElementById('fw-health').textContent = `${fwState.health}%`;
                         createExplosion(p.x, p.y, '#ffcc00');
-                        showToast("⚠️ Falso Positivo! Você bloqueou tráfego legítimo!");
+                        showToast(t('fwFalsePositive'));
                         if (fwState.health <= 0) endFirewallGame();
                     }
                     break;
@@ -1246,8 +1854,8 @@
             const survived = fwState.health > 0;
             showFeedback(
                 survived,
-                survived ? "Perímetro Defendido com Sucesso!" : "Sobrecarga no Firewall!",
-                `Integridade final do servidor: <strong>${fwState.health}%</strong>.<br><br>Um bom <strong>Firewall de Próxima Geração (NGFW)</strong> inspeciona pacotes profundamente (DPI) para bloquear assinaturas de ataques como <em>SQL Injection</em> e <em>DDoS</em> sem interromper serviços legítimos essenciais ao negócio.`,
+                survived ? t('fwWinTitle') : t('fwLoseTitle'),
+                t('fwEndBody')(fwState.health),
                 `+${earned} PTS`,
                 () => startStage4()
             );
@@ -1265,9 +1873,10 @@
 
         function renderQuizQuestion() {
             const idx = gameState.quizIndex;
-            const item = socialEngQuizzes[idx];
+            const quizzes = t('socialEngQuizzes');
+            const item = quizzes[idx];
 
-            document.getElementById('quiz-counter').textContent = `Cenário ${idx + 1} de ${socialEngQuizzes.length}`;
+            document.getElementById('quiz-counter').textContent = t('s4Counter')(idx + 1, quizzes.length);
             document.getElementById('quiz-tag').textContent = item.tag;
             document.getElementById('quiz-question').textContent = item.question;
 
@@ -1289,21 +1898,22 @@
         }
 
         function answerQuiz(isCorrect, explanation) {
+            const quizzes = t('socialEngQuizzes');
             if (isCorrect) {
                 addScore(4, 100);
             }
 
             showFeedback(
                 isCorrect,
-                isCorrect ? "Decisão Segura!" : "Vulnerabilidade Explorada!",
+                isCorrect ? t('quizWinTitle') : t('quizLoseTitle'),
                 explanation,
                 isCorrect ? "+100 PTS" : "+0 PTS",
                 () => {
                     gameState.quizIndex++;
-                    const progress = 75 + (gameState.quizIndex / socialEngQuizzes.length) * 25;
+                    const progress = 75 + (gameState.quizIndex / quizzes.length) * 25;
                     updateHUD(4, progress);
 
-                    if (gameState.quizIndex < socialEngQuizzes.length) {
+                    if (gameState.quizIndex < quizzes.length) {
                         renderQuizQuestion();
                     } else {
                         showFinalCertificate();
@@ -1323,33 +1933,36 @@
             const total = gameState.score;
             const accuracy = Math.min(100, Math.round((total / gameState.maxPossibleScore) * 100));
 
-            let rank = "ANALISTA JÚNIOR DE SEGURANÇA";
-            if (accuracy >= 85) rank = "ARQUITETO(A) ELITE DE CIBERDEFESA";
-            else if (accuracy >= 65) rank = "ESPECIALISTA EM SEGURANÇA CIBERNÉTICA";
-            else if (accuracy >= 45) rank = "OPERADOR(A) DE RESPOSTA A INCIDENTES";
+            let rank = t('rankJr');
+            if (accuracy >= 85) rank = t('rankElite');
+            else if (accuracy >= 65) rank = t('rankSpec');
+            else if (accuracy >= 45) rank = t('rankOp');
 
             document.getElementById('cert-player-name').textContent = gameState.playerName.toUpperCase();
             document.getElementById('cert-rank').textContent = rank;
             document.getElementById('cert-total-score').textContent = `${total} PTS`;
             document.getElementById('cert-accuracy').textContent = `${accuracy}%`;
-            document.getElementById('cert-hash').textContent = `#CG-${Math.floor(1000 + Math.random() * 9000)}`;
+            if (!document.getElementById('cert-hash').dataset.generated) {
+                document.getElementById('cert-hash').textContent = `#CG-${Math.floor(1000 + Math.random() * 9000)}`;
+                document.getElementById('cert-hash').dataset.generated = "true";
+            }
 
             const breakdown = document.getElementById('cert-breakdown');
             breakdown.innerHTML = `
                 <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 flex justify-between">
-                    <span class="text-slate-300">01. Detector de Phishing</span>
+                    <span class="text-slate-300">${t('certBreak1')}</span>
                     <strong class="text-cyan-400">${gameState.stageScores[1]} / 400 pts</strong>
                 </div>
                 <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 flex justify-between">
-                    <span class="text-slate-300">02. Forja de Senhas</span>
+                    <span class="text-slate-300">${t('certBreak2')}</span>
                     <strong class="text-emerald-400">${gameState.stageScores[2]} / 300 pts</strong>
                 </div>
                 <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 flex justify-between">
-                    <span class="text-slate-300">03. Defesa de Firewall</span>
+                    <span class="text-slate-300">${t('certBreak3')}</span>
                     <strong class="text-purple-400">${gameState.stageScores[3]} / 300 pts</strong>
                 </div>
                 <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 flex justify-between">
-                    <span class="text-slate-300">04. Engenharia Social</span>
+                    <span class="text-slate-300">${t('certBreak4')}</span>
                     <strong class="text-amber-400">${gameState.stageScores[4]} / 400 pts</strong>
                 </div>
             `;
@@ -1357,18 +1970,25 @@
 
         function copyCertificate() {
             playSound('click');
-            const text = `🛡️ CERTIFICADO CYBERGUARD OS\nAgente: ${gameState.playerName}\nPatente: ${document.getElementById('cert-rank').textContent}\nPontuação: ${gameState.score} PTS (${document.getElementById('cert-accuracy').textContent})`;
+            const text = t('certCopyText')(
+                gameState.playerName,
+                document.getElementById('cert-rank').textContent,
+                gameState.score,
+                document.getElementById('cert-accuracy').textContent
+            );
             const tempInput = document.createElement('textarea');
             tempInput.value = text;
             document.body.appendChild(tempInput);
             tempInput.select();
             document.execCommand('copy');
             document.body.removeChild(tempInput);
-            showToast("Credencial copiada para a área de transferência!");
+            showToast(t('certCopiedToast'));
         }
 
         function resetGame() {
             playSound('click');
+            gameState.currentStage = 0;
+            delete document.getElementById('cert-hash').dataset.generated;
             document.getElementById('hud-stats').classList.add('hidden');
             document.getElementById('hud-score').textContent = '0000';
             showScreen('screen-intro');
