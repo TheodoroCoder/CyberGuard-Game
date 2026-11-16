@@ -147,11 +147,12 @@
             </div>
 
             <div class="flex items-center gap-2 sm:gap-3">
-                <!-- Seletor de Idioma (PT / EN / ES) -->
+                <!-- Seletor de Idioma (PT / EN / ES / 中文) -->
                 <div class="flex items-center rounded-lg bg-slate-900 border border-slate-700 p-0.5 text-[11px] font-bold" role="group" aria-label="Language selector">
                     <button id="lang-btn-pt" onclick="setLanguage('pt')" class="px-2 py-1 rounded-md bg-cyan-500 text-slate-950 transition cursor-pointer">PT</button>
                     <button id="lang-btn-en" onclick="setLanguage('en')" class="px-2 py-1 rounded-md text-slate-400 hover:text-white transition cursor-pointer">EN</button>
                     <button id="lang-btn-es" onclick="setLanguage('es')" class="px-2 py-1 rounded-md text-slate-400 hover:text-white transition cursor-pointer">ES</button>
+                    <button id="lang-btn-zh" onclick="setLanguage('zh')" class="px-2 py-1 rounded-md text-slate-400 hover:text-white transition cursor-pointer">中文</button>
                 </div>
 
                 <button id="btn-sound" onclick="toggleAudio()" title="Alternar Áudio" class="p-2 rounded-lg bg-slate-800/80 border border-slate-700 text-cyan-400 hover:border-cyan-400 transition cursor-pointer">
@@ -1212,6 +1213,217 @@
                         explanation: "<strong>¡Verificación Fuera de Banda (Out-of-Band)!</strong> Los atacantes clonan fotos de perfil y crean falsa autoridad y urgencia. Valida siempre las transacciones financieras por un canal secundario oficial previamente conocido."
                     }
                 ]
+            },
+            zh: {
+                pageTitle: "CyberGuard OS // 网络防御模拟器",
+                headerSubtitle: "网络防御训练协议",
+                hudModule: "模块",
+                hudCompleted: "已完成",
+                soundOn: "终端音频已开启。",
+                soundOff: "音频已静音。",
+                introBadge: "在线训练系统",
+                introTitle: '你准备好保卫<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">全球网络了吗？</span>',
+                introDesc: '欢迎你，新兵。我们的基础设施正遭受持续攻击。你将通过 <strong class="text-cyan-400">4 项实时关键模拟</strong>，证明你化解数字威胁和保护机密数据的能力。',
+                mod1Title: "钓鱼邮件检测器",
+                mod1Sub: "电子邮件取证审计",
+                mod2Title: "密码锻造炉",
+                mod2Sub: "抗暴力破解测试",
+                mod3Title: "防火墙防御",
+                mod3Sub: "实时数据包过滤",
+                mod4Title: "社会工程学",
+                mod4Sub: "事件快速响应",
+                codenamePlaceholder: "请输入虚构代号...",
+                startBtn: "启动任务 >_",
+                opsecWarning: '<strong class="text-amber-400">OPSEC 安全警告（隐私保护）：</strong>切勿在网络上暴露你的真实身份。<strong class="text-white">请勿输入你的真实姓名或个人昵称</strong>；仅使用虚构代号。',
+                termLine1: "[OK] 正在加载反钓鱼启发式引擎...",
+                termLine2: "[OK] 加密熵评估模块已激活。",
+                termLine3: "[OK] TCP/UDP 数据包规则已就绪。",
+                termLine4: "[警报] 过去一小时内检测到 14 次入侵尝试。",
+                termLine5: "> 等待操作员身份验证...",
+                s1Tag: "模块 01 // 取证分析",
+                s1Heading: "钓鱼邮件检测器",
+                s1Counter: (i, t) => `第 ${i} 封邮件，共 ${t} 封`,
+                s1Desc: '仔细检查发件人、链接域名（悬停或点击链接按钮查看）以及邮件语气。判断该邮件是 <strong class="text-emerald-400">合法邮件</strong> 还是 <strong class="text-rose-400">钓鱼攻击</strong>。',
+                emailFrom: "发件人：",
+                emailSubject: "主题：",
+                emailDestUrl: "检测到的目标 URL：",
+                btnLegit: "合法邮件（安全）",
+                btnPhishing: "举报钓鱼（威胁）",
+                urlInspectToast: "URL 检查：请务必核对第一个斜杠 '/' 之前的主域名！",
+                phishingWinTitle: "取证分析精准！",
+                phishingLoseTitle: "安全沦陷警报！",
+                s2Tag: "模块 02 // 密码学与身份验证",
+                s2Heading: "抗暴力破解密码锻造炉",
+                s2Desc: '现代超级计算机每秒可测试数十亿种组合。创建一个达到 <strong class="text-emerald-400">100% 安全性</strong> 的主密码，使其在数个世纪内都能抵御暴力破解和字典攻击。',
+                pwdLabel: "输入你的高熵密码：",
+                pwdPlaceholder: "例：H0t-C0ffee#2026!Orbit",
+                pwdHintBtn: "提示 💡",
+                pwdHintToast: (sample) => `密码短语提示：组合随机单词 + 符号和数字。例如：${sample}`,
+                pwdStrengthTitle: "加密强度",
+                pwdEntropyLabel: "预估熵值：",
+                pwdCrackTitle: "破解所需时间（GPU 集群）：",
+                pwdVuln: (p) => `极易受攻击 (${p}%)`,
+                pwdMod: (p) => `中等强度 (${p}%)`,
+                pwdStrong: "坚不可摧 (100%)",
+                pwdInstant: "瞬间破解 (< 1 秒)",
+                pwdMinutes: "几分钟",
+                pwdMonths: "几个月",
+                pwdCenturies: "400+ 个世纪",
+                reqLength: "至少 14 个字符（长度是关键）",
+                reqUpperLower: "包含大写和小写字母",
+                reqNumber: "至少 2 个非连续数字",
+                reqSymbol: "至少 2 个特殊符号 (!@#$%&*)",
+                reqNoCommon: "不含常见模式 (1234, qwerty, password, admin, 2025/2026)",
+                pwdSubmitBtn: "验证访问密钥",
+                pwdWinTitle: "加密密钥已通过验证！",
+                pwdWinBody: "干得漂亮！高熵值的长密码（<em>密码短语</em>）在数学上使暴力破解变得不可行。请记住使用<strong>密码管理器</strong>避免跨服务重复使用密码，并始终开启<strong>多因素认证 (MFA)</strong>。",
+                s3Tag: "模块 03 // 边界安全",
+                s3Heading: "防火墙拦截器",
+                fwHealthLabel: "服务器完整性：",
+                fwTimerLabel: "剩余时间：",
+                fwRuleMalicious: '<strong>点击 / 触摸</strong>恶意数据包（<code class="text-rose-400">MALWARE, DDoS, SQLi, TROJAN</code>）将其拦截！',
+                fwRuleSafe: '<strong>放行</strong>合法网络流量（<code class="text-emerald-400">HTTPS, DNS, SSH-OK</code>）。',
+                fwOverlayTitle: "检测到传入网络流量",
+                fwOverlayDesc: "数据包正从左侧穿过网络流向右侧的服务器核心。在红色威胁击中核心前将其摧毁，切勿拦截绿色的合法数据包！",
+                fwStartBtn: "立即激活防火墙",
+                fwFalsePositive: "⚠️ 误报！你拦截了合法的网络流量！",
+                fwWinTitle: "网络边界防御成功！",
+                fwLoseTitle: "防火墙过载！",
+                fwEndBody: (h) => `最终服务器完整性：<strong>${h}%</strong>。<br><br>优秀的<strong>下一代防火墙 (NGFW)</strong> 会执行深度包检测 (DPI)，在拦截 <em>SQL 注入</em> 和 <em>DDoS</em> 等攻击特征的同时，确保关键业务服务不受干扰。`,
+                s4Tag: "模块 04 // 人为因素",
+                s4Heading: "社会工程学防御",
+                s4Counter: (i, t) => `第 ${i} 个场景，共 ${t} 个`,
+                quizWinTitle: "安全决策！",
+                quizLoseTitle: "漏洞被利用！",
+                certBadge: "CYBERGUARD 官方认证",
+                certTitle: "训练已完成",
+                certSubtitle: "特此证明以下操作员已完成全部网络防御模拟训练。",
+                certAgentLabel: "认证特工",
+                defaultAgentName: "CyberGuard 特工",
+                certRankLabel: "获得军衔：",
+                rankElite: "精英网络防御架构师",
+                rankSpec: "网络安全专家",
+                rankOp: "事件响应操作员",
+                rankJr: "初级安全分析师",
+                certScoreLabel: "总得分",
+                certAccuracyLabel: "准确率",
+                certModulesLabel: "完成模块",
+                certTelemetryTitle: "各模块遥测报告：",
+                certBreak1: "01. 钓鱼邮件检测器",
+                certBreak2: "02. 密码锻造炉",
+                certBreak3: "03. 防火墙防御",
+                certBreak4: "04. 社会工程学",
+                certCopyBtn: "复制凭证 📋",
+                certRestartBtn: "重新开始模拟 ↻",
+                certCopyText: (name, rank, score, acc) => `🛡️ CYBERGUARD OS 认证证书\n特工：${name}\n军衔：${rank}\n得分：${score} PTS (${acc})`,
+                certCopiedToast: "凭证已复制到剪贴板！",
+                modalBadgeOk: "威胁已清除 / 操作正确",
+                modalBadgeFail: "检测到安全漏洞",
+                modalNextBtn: "继续 >>",
+                footerText: "CYBERGUARD OS // 信息安全教育模拟器",
+                phishingEmails: [
+                    {
+                        senderName: "中国工商银行安全中心",
+                        senderAddr: "alerts@icbc-security-update.com",
+                        date: "今天 08:42",
+                        subject: "紧急：您的账户将在 2 小时内被冻结！",
+                        body: [
+                            "尊敬的客户：",
+                            "我们检测到有未知设备在您的活期账户上进行未经授权的登录尝试。",
+                            "为避免账户永久冻结及违约金，请立即点击下方链接验证您的安全密钥和密码。"
+                        ],
+                        ctaText: "立即解锁账户",
+                        realUrl: "http://icbc-security-update.com/login-token",
+                        isPhishing: true,
+                        explanation: "<strong>3 个典型钓鱼信号：</strong><br>1. <b>仿冒域名：</b>官方域名应为 <code>icbc.com.cn</code>，而非 <code>icbc-security-update.com</code>。<br>2. <b>制造虚假紧迫感：</b>以 2 小时内冻结账户制造恐慌。<br>3. <b>不安全的 HTTP 协议：</b>银行绝不会通过邮件链接索要密码。"
+                    },
+                    {
+                        senderName: "内部 IT 支持团队",
+                        senderAddr: "it.support@yourcompany.com",
+                        date: "今天 10:15",
+                        subject: "本周日企业 VPN 计划内维护通知",
+                        body: [
+                            "各位同事好：",
+                            "特此通知，本周日凌晨 02:00 至 05:00，我们将对企业 VPN 证书进行例行更新。",
+                            "目前您无需执行任何操作。如有疑问，请访问内网门户查看公告。"
+                        ],
+                        ctaText: "查看内网通知",
+                        realUrl: "https://intranet.yourcompany.com/notices/vpn-maintenance",
+                        isPhishing: false,
+                        explanation: "<strong>合法邮件！</strong><br>发件人使用了准确的企业域名（<code>@yourcompany.com</code>），链接通过 <code>HTTPS</code> 指向官方内网，且未索要任何账号密码或要求执行可疑的紧急操作。"
+                    },
+                    {
+                        senderName: "Microsoft 365 管理员",
+                        senderAddr: "no-reply@rnicrosoft-support.com",
+                        date: "昨天 19:50",
+                        subject: "企业邮箱密码即将过期提醒",
+                        body: [
+                            "您的 Microsoft 365 密码将于今晚午夜过期。",
+                            "请点击下方链接验证当前会话以保留原密码，避免失去邮件访问权限。"
+                        ],
+                        ctaText: "保留当前密码",
+                        realUrl: "https://login.rnicrosoft-support.com/auth/office365",
+                        isPhishing: true,
+                        explanation: "<strong>域名仿冒攻击（Typosquatting）！</strong><br>仔细观察发件人和 URL：其中拼写的是 <code>rnicrosoft</code>（用 <b>R + N</b> 组合模仿字母 <b>M</b>）。攻击者利用视觉相似性欺骗匆忙查看邮件的用户。"
+                    },
+                    {
+                        senderName: "人力资源部 - 薪酬福利",
+                        senderAddr: "hr@yourcompany.com",
+                        date: "昨天 14:20",
+                        subject: "2026 年全员调薪明细表（机密）",
+                        body: [
+                            "你好：",
+                            "管理层误将包含各部门最新薪资调整方案的文件释放了出来。",
+                            "请下载附件 <code>Salaries_2026.xlsm</code> 并启用宏功能以查看完整内容。"
+                        ],
+                        ctaText: "下载表格 (.xlsm)",
+                        realUrl: "https://cloud-files-share-anon.net/download/Salaries_2026.xlsm",
+                        isPhishing: true,
+                        explanation: "<strong>好奇心诱饵 + 恶意软件！</strong><br>即使“发件人”看似正确（发件人伪造），链接却指向未知的外部服务器，并提供启用宏的 <code>.xlsm</code> Excel 文件——这是植入勒索软件的典型手段。"
+                    }
+                ],
+                socialEngQuizzes: [
+                    {
+                        tag: "借口攻击 // 假冒技术支持",
+                        question: "你接到公司分机打来的电话，对方自称是 IT 支持人员并说：“我们正在升级邮件服务器，需要你报一下刚才发送到你手机上的 MFA（双因素认证）验证码。”你该怎么做？",
+                        options: [
+                            { text: "迅速提供验证码，以免耽误服务器维护进度。", correct: false },
+                            { text: "拒绝提供验证码，挂断电话并通过官方渠道向 IT 团队提交工单核实。", correct: true },
+                            { text: "要求对方先发一封邮件确认姓名，然后再把验证码告诉他。", correct: false }
+                        ],
+                        explanation: "<strong>切勿分享 MFA/2FA 验证码！</strong>正规 IT 团队绝不会索要你的密码或动态验证码。此类骗局旨在实时截获你的第二重验证，以便攻击者利用已泄露的密码登录你的账户。"
+                    },
+                    {
+                        tag: "诱饵攻击 // 物理介质",
+                        question: "在公司停车场步行时，你捡到一个贴有“薪资表 - 机密”标签的 U 盘。最安全的做法是什么？",
+                        options: [
+                            { text: "在开启杀毒软件的情况下插入我的工作电脑，看看失主是谁。", correct: false },
+                            { text: "插入一台没有连接互联网的旧电脑里查看文件内容。", correct: false },
+                            { text: "不要插入任何设备，立即将其交给信息安全团队处理。", correct: true }
+                        ],
+                        explanation: "<strong>典型的诱饵攻击（Baiting）！</strong>被故意丢弃的 U 盘可能伪装了“Rubber Ducky”硬件，一旦插入就会模拟键盘并在毫秒内执行恶意指令，甚至能绕过常规杀毒软件。"
+                    },
+                    {
+                        tag: "尾随闯入 // 物理门禁",
+                        question: "你正刷门禁卡进入公司受限办公区，身后紧跟着一位身穿快递制服、抱着两个沉重箱子的人，他请求道：“麻烦帮我扶一下门，好吗？”",
+                        options: [
+                            { text: "出于礼貌帮他扶住门，因为他正搬着重物。", correct: false },
+                            { text: "礼貌地向他解释公司规定必须在前台登记，并陪同他前往前台。", correct: true },
+                            { text: "让他进来，但盯着看他往哪里走。", correct: false }
+                        ],
+                        explanation: "<strong>物理安全也是网络安全！</strong><em>尾随（Tailgating）</em>攻击利用人类的礼貌心理，获取对受限机房、未受保护的网络端口以及未锁定电脑的物理接触权限。"
+                    },
+                    {
+                        tag: "语音钓鱼与 CEO 欺诈",
+                        question: "你在即时通讯软件上收到一条自称财务总监发来的紧急消息（使用了他的头像，但来自一个新号码），要求你立即转账一笔资金以完成一项保密合同的签约。",
+                        options: [
+                            { text: "立即办理转账，向高层展示高效执行力。", correct: false },
+                            { text: "直接在该聊天窗口回复询问是不是他本人。", correct: false },
+                            { text: "直接拨打财务总监已知的公司官方电话号码进行语音核实。", correct: true }
+                        ],
+                        explanation: "<strong>带外验证（Out-of-Band Verification）！</strong>攻击者常克隆头像并利用权威感和保密借口施压。涉及资金转账时，务必通过预先知晓的第二个官方渠道进行核实。"
+                    }
+                ]
             }
         };
 
@@ -1225,8 +1437,9 @@
             playSound('click');
 
             // Atualiza botões ativos no seletor
-            ['pt', 'en', 'es'].forEach(code => {
+            ['pt', 'en', 'es', 'zh'].forEach(code => {
                 const btn = document.getElementById(`lang-btn-${code}`);
+                if (!btn) return;
                 if (code === lang) {
                     btn.className = "px-2 py-1 rounded-md bg-cyan-500 text-slate-950 transition cursor-pointer";
                 } else {
@@ -1234,7 +1447,7 @@
                 }
             });
 
-            document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
+            document.documentElement.lang = lang === 'pt' ? 'pt-BR' : (lang === 'zh' ? 'zh-CN' : lang);
             document.title = t('pageTitle');
 
             // Atualiza textos simples
@@ -1500,7 +1713,8 @@
             const samplesByLang = {
                 pt: ["Tigre#Azul94!Montanha$", "Cafe@Quente82*Orbita!", "Foguete$73Lunar#Escudo!"],
                 en: ["Tiger#Blue94!Mountain$", "Hot@Coffee82*Orbit!", "Rocket$73Lunar#Shield!"],
-                es: ["Tigre#Azul94!Montana$", "Cafe@Caliente82*Orbita!", "Cohete$73Lunar#Escudo!"]
+                es: ["Tigre#Azul94!Montana$", "Cafe@Caliente82*Orbita!", "Cohete$73Lunar#Escudo!"],
+                zh: ["Tiger#Blue94!Mountain$", "Dragon@Cloud82*Orbit!", "Rocket$73Lunar#Shield!"]
             };
             const samples = samplesByLang[currentLang];
             const pick = samples[Math.floor(Math.random() * samples.length)];
